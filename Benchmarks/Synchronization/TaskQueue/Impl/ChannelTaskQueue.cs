@@ -7,21 +7,26 @@ internal sealed class ChannelTaskQueue
     private readonly Channel<int> channel =
         Channel.CreateUnbounded<int>(new UnboundedChannelOptions { SingleWriter = true });
 
+    private readonly ChannelReader<int> reader;
+    private readonly ChannelWriter<int> writer;
+
     public ChannelTaskQueue()
     {
-        channel.Writer.TryWrite(1);
+        reader = channel.Reader;
+        writer = channel.Writer;
+        writer.TryWrite(1);
     }
 
     public async Task Execute(Func<Task> func)
     {
-        await channel.Reader.ReadAsync();
+        await reader.ReadAsync();
         try
         {
             await func.Invoke();
         }
         finally
         {
-            channel.Writer.TryWrite(1);
+            writer.TryWrite(1);
         }
     }
 }
