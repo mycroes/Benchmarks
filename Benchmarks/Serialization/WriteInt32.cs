@@ -44,6 +44,19 @@ public class WriteInt32
     }
 
     [Benchmark]
+    public void MemoryMarshal_Cast_And_CopyTo()
+    {
+        var source = data.AsSpan();
+        var byteSource = MemoryMarshal.Cast<int, byte>(source);
+        var dest = destination.AsSpan();
+
+        for (var i = 0; i < N; i++)
+        {
+            byteSource.Slice(i * sizeof(int), sizeof(int)).CopyTo(dest.Slice(i * sizeof(int)));
+        }
+    }
+
+    [Benchmark]
     public void BinaryPrimitives_WriteInt32BigEndian()
     {
         var source = data.AsSpan();
