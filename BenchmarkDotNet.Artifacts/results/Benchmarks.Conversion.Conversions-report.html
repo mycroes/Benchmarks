@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>Benchmarks.Conversion.Conversions-20230606-220356</title>
+<title>Benchmarks.Conversion.Conversions-20230608-000350</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -15,18 +15,30 @@
 <pre><code>
 BenchmarkDotNet=v0.13.5, OS=Windows 10 (10.0.19045.2965/22H2/2022Update)
 Intel Core i9-9900K CPU 3.60GHz (Coffee Lake), 1 CPU, 16 logical and 8 physical cores
-.NET SDK=7.0.102
-  [Host]     : .NET 6.0.16 (6.0.1623.17311), X64 RyuJIT AVX2
-  DefaultJob : .NET 6.0.16 (6.0.1623.17311), X64 RyuJIT AVX2
+.NET SDK=7.0.302
+  [Host]     : .NET 7.0.5 (7.0.523.17405), X64 RyuJIT AVX2
+  Job-PVBHWX : .NET 6.0.16 (6.0.1623.17311), X64 RyuJIT AVX2
+  Job-HVGVMY : .NET 7.0.5 (7.0.523.17405), X64 RyuJIT AVX2
+  Job-MBMOVA : .NET Framework 4.8 (4.8.4614.0), X64 RyuJIT VectorSize=256
+  Job-BYDXEP : .NET Framework 4.8 (4.8.4614.0), X64 RyuJIT VectorSize=256
 </code></pre>
 <pre><code></code></pre>
 
 <table>
-<thead><tr><th>Method</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Median</th><th>Code Size</th><th>Completed Work Items</th><th>Lock Contentions</th><th>Allocated</th>
+<thead><tr><th>Method</th><th>       Runtime</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Median</th><th>Ratio</th><th>RatioSD</th><th>Code Size</th><th>Allocated</th><th>Alloc Ratio</th>
 </tr>
-</thead><tbody><tr><td>FromExplicit</td><td>0.0211 ns</td><td>0.0254 ns</td><td>0.0282 ns</td><td>0.0058 ns</td><td>14 B</td><td>-</td><td>-</td><td>-</td>
-</tr><tr><td>FromImplicit</td><td>0.0493 ns</td><td>0.0195 ns</td><td>0.0182 ns</td><td>0.0457 ns</td><td>14 B</td><td>-</td><td>-</td><td>-</td>
-</tr><tr><td>FromFactory</td><td>0.0221 ns</td><td>0.0176 ns</td><td>0.0138 ns</td><td>0.0251 ns</td><td>14 B</td><td>-</td><td>-</td><td>-</td>
+</thead><tbody><tr><td>FromExplicit</td><td>.NET 6.0</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>?</td><td>?</td><td>14 B</td><td>-</td><td>?</td>
+</tr><tr><td>FromExplicit</td><td>.NET 7.0</td><td>0.1243 ns</td><td>0.0330 ns</td><td>0.0969 ns</td><td>0.1042 ns</td><td>?</td><td>?</td><td>14 B</td><td>-</td><td>?</td>
+</tr><tr><td>FromExplicit</td><td>.NET Framework 4.6.2</td><td>0.0845 ns</td><td>0.0248 ns</td><td>0.0622 ns</td><td>0.0874 ns</td><td>?</td><td>?</td><td>14 B</td><td>-</td><td>?</td>
+</tr><tr><td>FromExplicit</td><td>.NET Framework 4.8</td><td>0.0095 ns</td><td>0.0156 ns</td><td>0.0214 ns</td><td>0.0000 ns</td><td>?</td><td>?</td><td>14 B</td><td>-</td><td>?</td>
+</tr><tr><td>FromImplicit</td><td>.NET 6.0</td><td>0.0312 ns</td><td>0.0239 ns</td><td>0.0400 ns</td><td>0.0164 ns</td><td>?</td><td>?</td><td>14 B</td><td>-</td><td>?</td>
+</tr><tr><td>FromImplicit</td><td>.NET 7.0</td><td>0.0160 ns</td><td>0.0138 ns</td><td>0.0202 ns</td><td>0.0000 ns</td><td>?</td><td>?</td><td>14 B</td><td>-</td><td>?</td>
+</tr><tr><td>FromImplicit</td><td>.NET Framework 4.6.2</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>?</td><td>?</td><td>14 B</td><td>-</td><td>?</td>
+</tr><tr><td>FromImplicit</td><td>.NET Framework 4.8</td><td>0.0353 ns</td><td>0.0231 ns</td><td>0.0439 ns</td><td>0.0184 ns</td><td>?</td><td>?</td><td>14 B</td><td>-</td><td>?</td>
+</tr><tr><td>FromFactory</td><td>.NET 6.0</td><td>0.0399 ns</td><td>0.0267 ns</td><td>0.0407 ns</td><td>0.0329 ns</td><td>?</td><td>?</td><td>14 B</td><td>-</td><td>?</td>
+</tr><tr><td>FromFactory</td><td>.NET 7.0</td><td>0.0051 ns</td><td>0.0081 ns</td><td>0.0109 ns</td><td>0.0000 ns</td><td>?</td><td>?</td><td>14 B</td><td>-</td><td>?</td>
+</tr><tr><td>FromFactory</td><td>.NET Framework 4.6.2</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>?</td><td>?</td><td>14 B</td><td>-</td><td>?</td>
+</tr><tr><td>FromFactory</td><td>.NET Framework 4.8</td><td>0.0053 ns</td><td>0.0095 ns</td><td>0.0098 ns</td><td>0.0000 ns</td><td>?</td><td>?</td><td>14 B</td><td>-</td><td>?</td>
 </tr></tbody></table>
 </body>
 </html>
