@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>Benchmarks.Serialization.UnsafeWriteUnaligned-20230611-211922</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet=v0.13.5, OS=Windows 10 (10.0.19045.2965/22H2/2022Update)
+Intel Core i9-9900K CPU 3.60GHz (Coffee Lake), 1 CPU, 16 logical and 8 physical cores
+.NET SDK=7.0.302
+  [Host]     : .NET 7.0.5 (7.0.523.17405), X64 RyuJIT AVX2
+  Job-UNEEFO : .NET 6.0.16 (6.0.1623.17311), X64 RyuJIT AVX2
+  Job-IFWEFP : .NET 7.0.5 (7.0.523.17405), X64 RyuJIT AVX2
+  Job-ULUCMY : .NET Framework 4.8 (4.8.4614.0), X64 RyuJIT VectorSize=256
+  Job-YUHCIT : .NET Framework 4.8 (4.8.4614.0), X64 RyuJIT VectorSize=256
+</code></pre>
+<pre><code></code></pre>
+
+<table>
+<thead><tr><th>    Method</th><th>       Runtime</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Median</th><th>Ratio</th><th>RatioSD</th><th>Code Size</th><th>Allocated</th><th>Alloc Ratio</th>
+</tr>
+</thead><tbody><tr><td>WriteInt</td><td>.NET 6.0</td><td>0.0378 ns</td><td>0.0289 ns</td><td>0.0735 ns</td><td>0.0000 ns</td><td>0.006</td><td>0.01</td><td>26 B</td><td>-</td><td>NA</td>
+</tr><tr><td>WriteBytes</td><td>.NET 6.0</td><td>2.2084 ns</td><td>0.0823 ns</td><td>0.0643 ns</td><td>2.2121 ns</td><td>0.171</td><td>0.01</td><td>102 B</td><td>-</td><td>NA</td>
+</tr><tr><td>WriteIntComposed</td><td>.NET 6.0</td><td>1.0167 ns</td><td>0.0604 ns</td><td>0.0992 ns</td><td>0.9777 ns</td><td>0.081</td><td>0.01</td><td>113 B</td><td>-</td><td>NA</td>
+</tr><tr><td>WriteLong</td><td>.NET 6.0</td><td>0.0535 ns</td><td>0.0302 ns</td><td>0.0838 ns</td><td>0.0000 ns</td><td>0.008</td><td>0.01</td><td>28 B</td><td>-</td><td>NA</td>
+</tr><tr><td>WriteInt</td><td>.NET 7.0</td><td>0.0063 ns</td><td>0.0130 ns</td><td>0.0231 ns</td><td>0.0000 ns</td><td>0.001</td><td>0.00</td><td>26 B</td><td>-</td><td>NA</td>
+</tr><tr><td>WriteBytes</td><td>.NET 7.0</td><td>2.1079 ns</td><td>0.0719 ns</td><td>0.0601 ns</td><td>2.0896 ns</td><td>0.162</td><td>0.01</td><td>102 B</td><td>-</td><td>NA</td>
+</tr><tr><td>WriteIntComposed</td><td>.NET 7.0</td><td>0.9609 ns</td><td>0.0614 ns</td><td>0.1227 ns</td><td>0.9176 ns</td><td>0.076</td><td>0.01</td><td>113 B</td><td>-</td><td>NA</td>
+</tr><tr><td>WriteLong</td><td>.NET 7.0</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.000</td><td>0.00</td><td>28 B</td><td>-</td><td>NA</td>
+</tr><tr><td>WriteInt</td><td>.NET Framework 4.6.2</td><td>12.9250 ns</td><td>0.3002 ns</td><td>0.3457 ns</td><td>12.8630 ns</td><td>1.000</td><td>0.00</td><td>116 B</td><td>-</td><td>NA</td>
+</tr><tr><td>WriteBytes</td><td>.NET Framework 4.6.2</td><td>13.7015 ns</td><td>0.3081 ns</td><td>0.6010 ns</td><td>13.6544 ns</td><td>1.063</td><td>0.06</td><td>184 B</td><td>-</td><td>NA</td>
+</tr><tr><td>WriteIntComposed</td><td>.NET Framework 4.6.2</td><td>13.7783 ns</td><td>0.3029 ns</td><td>0.7198 ns</td><td>13.6307 ns</td><td>1.075</td><td>0.07</td><td>195 B</td><td>-</td><td>NA</td>
+</tr><tr><td>WriteLong</td><td>.NET Framework 4.6.2</td><td>13.1900 ns</td><td>0.2985 ns</td><td>0.6231 ns</td><td>13.0193 ns</td><td>1.011</td><td>0.05</td><td>118 B</td><td>-</td><td>NA</td>
+</tr><tr><td>WriteInt</td><td>.NET Framework 4.8</td><td>13.5071 ns</td><td>0.3077 ns</td><td>0.8828 ns</td><td>13.2465 ns</td><td>1.035</td><td>0.07</td><td>116 B</td><td>-</td><td>NA</td>
+</tr><tr><td>WriteBytes</td><td>.NET Framework 4.8</td><td>13.6829 ns</td><td>0.3027 ns</td><td>0.5458 ns</td><td>13.6687 ns</td><td>1.063</td><td>0.06</td><td>184 B</td><td>-</td><td>NA</td>
+</tr><tr><td>WriteIntComposed</td><td>.NET Framework 4.8</td><td>13.7416 ns</td><td>0.3106 ns</td><td>0.6882 ns</td><td>13.5610 ns</td><td>1.082</td><td>0.07</td><td>195 B</td><td>-</td><td>NA</td>
+</tr><tr><td>WriteLong</td><td>.NET Framework 4.8</td><td>13.2194 ns</td><td>0.2730 ns</td><td>0.4486 ns</td><td>13.2460 ns</td><td>1.020</td><td>0.05</td><td>118 B</td><td>-</td><td>NA</td>
+</tr></tbody></table>
+</body>
+</html>
