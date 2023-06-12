@@ -8,6 +8,6 @@ internal sealed class LockedTaskQueue
     public Task Execute(Func<Task> func)
     {
         lock (exclusiveTaskLock)
-            return queue = queue.ContinueWith(t => func()).Unwrap();
+            return queue = queue.ContinueWith(t => func(), TaskContinuationOptions.ExecuteSynchronously).Unwrap();
     }
 }

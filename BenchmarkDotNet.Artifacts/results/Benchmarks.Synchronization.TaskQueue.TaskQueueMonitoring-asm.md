@@ -45,11 +45,14 @@ M02_L00:
 ```
 ```assembly
 ; Benchmarks.Synchronization.TaskQueue.Impl.InterLockedExchangeTaskQueue.Execute(System.Func`1<System.Threading.Tasks.Task>)
+       push      r14
        push      rdi
        push      rsi
        push      rbp
        push      rbx
-       sub       rsp,28
+       sub       rsp,40
+       xor       eax,eax
+       mov       [rsp+3C],eax
        mov       rsi,rcx
        mov       rdi,rdx
        mov       rcx,offset MT_Benchmarks.Synchronization.TaskQueue.Impl.InterLockedExchangeTaskQueue+<>c__DisplayClass1_0
@@ -85,20 +88,71 @@ M02_L00:
        lea       rcx,[rbp+8]
        mov       rdx,rbx
        call      CORINFO_HELP_ASSIGN_REF
-       mov       rcx,offset Benchmarks.Synchronization.TaskQueue.Impl.InterLockedExchangeTaskQueue+<>c__DisplayClass1_0.<Execute>b__0(System.Threading.Tasks.Task)
-       mov       [rbp+18],rcx
-       mov       rcx,rsi
+       mov       rax,offset Benchmarks.Synchronization.TaskQueue.Impl.InterLockedExchangeTaskQueue+<>c__DisplayClass1_0.<Execute>b__0(System.Threading.Tasks.Task)
+       mov       [rbp+18],rax
+       cmp       [rsi],esi
+       call      System.Threading.Tasks.TaskScheduler.get_InternalCurrent()
+       mov       rbx,rax
+       test      rbx,rbx
+       jne       short M03_L00
+       mov       rcx,20898001A68
+       mov       rbx,[rcx]
+M03_L00:
+       test      rbx,rbx
+       je        near ptr M03_L03
+       lea       rcx,[rsp+3C]
+       mov       dword ptr [rcx],200
+       mov       rcx,offset MT_System.Threading.Tasks.ContinuationTaskFromTask
+       call      CORINFO_HELP_NEWSFAST
+       mov       r14,rax
+       mov       ecx,[rsp+3C]
+       xor       edx,edx
+       mov       [rsp+20],edx
+       mov       [rsp+28],ecx
+       mov       [rsp+30],rdx
+       mov       rcx,r14
        mov       rdx,rbp
-       cmp       [rcx],ecx
-       call      System.Threading.Tasks.Task.ContinueWith(System.Action`1<System.Threading.Tasks.Task>)
+       xor       r9d,r9d
+       xor       r8d,r8d
+       call      System.Threading.Tasks.Task.TaskConstructorCore(System.Delegate, System.Object, System.Threading.CancellationToken, System.Threading.Tasks.TaskCreationOptions, System.Threading.Tasks.InternalTaskOptions, System.Threading.Tasks.TaskScheduler)
+       call      System.Threading.ExecutionContext.Capture()
+       mov       rbp,rax
+       test      rbp,rbp
+       je        short M03_L02
+       mov       rcx,20898001890
+       cmp       rbp,[rcx]
+       je        short M03_L01
+       mov       rcx,r14
+       call      System.Threading.Tasks.Task.EnsureContingentPropertiesInitializedUnsafe()
+       lea       rcx,[rax+8]
+       mov       rdx,rbp
+       call      CORINFO_HELP_ASSIGN_REF
+M03_L01:
+       lea       rcx,[r14+38]
+       mov       rdx,rsi
+       call      CORINFO_HELP_ASSIGN_REF
+       mov       dword ptr [rsp+20],80000
+       mov       rcx,rsi
+       mov       rdx,r14
+       mov       r8,rbx
+       xor       r9d,r9d
+       call      System.Threading.Tasks.Task.ContinueWithCore(System.Threading.Tasks.Task, System.Threading.Tasks.TaskScheduler, System.Threading.CancellationToken, System.Threading.Tasks.TaskContinuationOptions)
        mov       rax,rdi
-       add       rsp,28
+       add       rsp,40
        pop       rbx
        pop       rbp
        pop       rsi
        pop       rdi
+       pop       r14
        ret
-; Total bytes of code 210
+M03_L02:
+       or        dword ptr [r14+34],20000000
+       jmp       short M03_L01
+M03_L03:
+       mov       ecx,30
+       call      System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument)
+       int       3
+; Total bytes of code 415
 ```
 ```assembly
 ; Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring.Run(System.Func`2<System.Func`1<System.Threading.Tasks.Task>,System.Threading.Tasks.Task>)
@@ -149,20 +203,20 @@ M02_L00:
        mov       rcx,offset MD_System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>>)
        call      System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.__Canon>)
        mov       rsi,rax
-       mov       rcx,203180076C0
+       mov       rcx,20898007430
        mov       r8,[rcx]
        test      r8,r8
        jne       short M04_L00
        mov       rcx,offset MT_System.Func`2[[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib],[System.Threading.Tasks.Task, System.Private.CoreLib]]
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
-       mov       rdx,203180076B0
+       mov       rdx,20898007420
        mov       rdx,[rdx]
        lea       rcx,[rbx+8]
        call      CORINFO_HELP_ASSIGN_REF
        mov       rdx,offset Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring+<>c.<Run>b__10_1(System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>)
        mov       [rbx+18],rdx
-       mov       rcx,203180076C0
+       mov       rcx,20898007430
        mov       rdx,rbx
        call      CORINFO_HELP_CHECKED_ASSIGN_REF
        mov       r8,rbx
@@ -231,15 +285,15 @@ System.MulticastDelegate.ThrowNullThisInDelegateToInstance()
        je        short M00_L00
        lea       rcx,[rdi+8]
        call      CORINFO_HELP_ASSIGN_REF
-       mov       rcx,7FF9543BAA08
+       mov       rcx,7FFC9D3CAA08
        mov       [rdi+18],rcx
        mov       rcx,rdi
        add       rsp,28
        pop       rsi
        pop       rdi
-       jmp       qword ptr [7FF9543B16C0]; Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring.Run(System.Func`2<System.Func`1<System.Threading.Tasks.Task>,System.Threading.Tasks.Task>)
+       jmp       qword ptr [7FFC9D3C16C0]; Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring.Run(System.Func`2<System.Func`1<System.Threading.Tasks.Task>,System.Threading.Tasks.Task>)
 M00_L00:
-       call      qword ptr [7FF95410B630]
+       call      qword ptr [7FFC9D11B630]
        int       3
 ; Total bytes of code 81
 ```
@@ -258,7 +312,7 @@ M00_L00:
        jne       short M02_L00
        ret
 M02_L00:
-       jmp       qword ptr [7FF9545673C0]; System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(System.Threading.Tasks.Task)
+       jmp       qword ptr [7FFC9D5776C0]; System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(System.Threading.Tasks.Task)
 ; Total bytes of code 25
 ```
 ```assembly
@@ -285,7 +339,7 @@ M02_L00:
        xor       edx,edx
        mov       r8d,1
        xor       r9d,r9d
-       call      qword ptr [7FF954567900]; System.Threading.EventWaitHandle.CreateEventCore(Boolean, System.Threading.EventResetMode, System.String, Boolean ByRef)
+       call      qword ptr [7FFC9D577C00]; System.Threading.EventWaitHandle.CreateEventCore(Boolean, System.Threading.EventResetMode, System.String, Boolean ByRef)
        lea       rcx,[rdi+8]
        mov       rdx,rsi
        call      CORINFO_HELP_ASSIGN_REF
@@ -303,40 +357,40 @@ M02_L00:
        lea       rcx,[rbx+8]
        mov       rdx,rdi
        call      CORINFO_HELP_ASSIGN_REF
-       mov       r8,7FF954566450
+       mov       r8,7FFC9D576750
        mov       [rbx+18],r8
        mov       r8,rbx
        mov       rdx,rsi
        mov       rcx,offset MD_System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>>)
-       call      qword ptr [7FF954567F30]; System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.__Canon>)
+       call      qword ptr [7FFC9D5795A0]; System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.__Canon>)
        mov       rsi,rax
-       mov       rcx,1E2140066C8
+       mov       rcx,1CF92806450
        mov       r8,[rcx]
        test      r8,r8
        jne       short M03_L00
        mov       rcx,offset MT_System.Func`2[[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib],[System.Threading.Tasks.Task, System.Private.CoreLib]]
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
-       mov       rdx,1E2140066B8
+       mov       rdx,1CF92806440
        mov       rdx,[rdx]
        lea       rcx,[rbx+8]
        call      CORINFO_HELP_ASSIGN_REF
-       mov       rdx,7FF954566FA8
+       mov       rdx,7FFC9D578618
        mov       [rbx+18],rdx
-       mov       rcx,1E2140066C8
+       mov       rcx,1CF92806450
        mov       rdx,rbx
        call      CORINFO_HELP_ASSIGN_REF
        mov       r8,rbx
 M03_L00:
        mov       rdx,rsi
        mov       rcx,offset MD_System.Linq.Enumerable.Select[[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib],[System.Threading.Tasks.Task, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>>, System.Func`2<System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>,System.Threading.Tasks.Task>)
-       call      qword ptr [7FF9544C1510]; System.Linq.Enumerable.Select[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>, System.Func`2<System.__Canon,System.__Canon>)
+       call      qword ptr [7FFC9D4D1510]; System.Linq.Enumerable.Select[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>, System.Func`2<System.__Canon,System.__Canon>)
        mov       rsi,rax
        mov       rcx,[rdi+8]
        cmp       [rcx],ecx
-       call      qword ptr [7FF954567948]; System.Threading.EventWaitHandle.Set()
+       call      qword ptr [7FFC9D577C48]; System.Threading.EventWaitHandle.Set()
        mov       rcx,rsi
-       call      qword ptr [7FF95433B348]; System.Threading.Tasks.Task.WhenAll(System.Collections.Generic.IEnumerable`1<System.Threading.Tasks.Task>)
+       call      qword ptr [7FFC9D34B348]; System.Threading.Tasks.Task.WhenAll(System.Collections.Generic.IEnumerable`1<System.Threading.Tasks.Task>)
        nop
        add       rsp,30
        pop       rbx
@@ -355,16 +409,16 @@ M03_L00:
        mov       rcx,rsi
        xor       r8d,r8d
        mov       edx,0FFFFFFFF
-       call      qword ptr [7FF954339AE0]; System.Threading.Tasks.Task.InternalWaitCore(Int32, System.Threading.CancellationToken)
+       call      qword ptr [7FFC9D349AE0]; System.Threading.Tasks.Task.InternalWaitCore(Int32, System.Threading.CancellationToken)
 M04_L00:
        mov       rcx,rsi
-       call      qword ptr [7FF954339270]; System.Threading.Tasks.Task.NotifyDebuggerOfWaitCompletionIfNecessary()
+       call      qword ptr [7FFC9D349270]; System.Threading.Tasks.Task.NotifyDebuggerOfWaitCompletionIfNecessary()
        mov       ecx,[rsi+34]
        and       ecx,1600000
        cmp       ecx,1000000
        je        short M04_L01
        mov       rcx,rsi
-       call      qword ptr [7FF9545673D8]
+       call      qword ptr [7FFC9D5776D8]
 M04_L01:
        nop
        add       rsp,20
@@ -473,8 +527,9 @@ M02_L00:
        mov       [rbp+18],rcx
        mov       rcx,rsi
        mov       rdx,rbp
+       mov       r8d,80000
        cmp       [rcx],ecx
-       call      System.Threading.Tasks.Task.ContinueWith(System.Action`1<System.Threading.Tasks.Task>)
+       call      System.Threading.Tasks.Task.ContinueWith(System.Action`1<System.Threading.Tasks.Task>, System.Threading.Tasks.TaskContinuationOptions)
        mov       rax,rdi
        add       rsp,28
        pop       rbx
@@ -482,7 +537,7 @@ M02_L00:
        pop       rsi
        pop       rdi
        ret
-; Total bytes of code 218
+; Total bytes of code 224
 ```
 ```assembly
 ; Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring.Run(System.Func`2<System.Func`1<System.Threading.Tasks.Task>,System.Threading.Tasks.Task>)
@@ -523,14 +578,14 @@ M02_L00:
        mov       rcx,offset MD_System.Linq.Enumerable.Select[[System.Int32, mscorlib],[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, mscorlib]], mscorlib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>>)
        call      System.Linq.Enumerable.Select[[System.Int32, mscorlib],[System.__Canon, mscorlib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.__Canon>)
        mov       rsi,rax
-       mov       rcx,20B69E0BD08
+       mov       rcx,23FDDBE9F50
        mov       r8,[rcx]
        test      r8,r8
        jne       short M04_L00
        mov       rcx,offset MT_System.Func`2[[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, mscorlib]], mscorlib],[System.Threading.Tasks.Task, mscorlib]]
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
-       mov       rdx,20B69E0BCF8
+       mov       rdx,23FDDBE9F40
        mov       rdx,[rdx]
        test      rdx,rdx
        je        short M04_L01
@@ -538,7 +593,7 @@ M02_L00:
        call      CORINFO_HELP_ASSIGN_REF
        mov       rdx,offset Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring+<>c.<Run>b__10_1(System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>)
        mov       [rbx+18],rdx
-       mov       rcx,20B69E0BD08
+       mov       rcx,23FDDBE9F50
        mov       rdx,rbx
        call      CORINFO_HELP_CHECKED_ASSIGN_REF
        mov       r8,rbx
@@ -568,18 +623,18 @@ M04_L01:
        push      rsi
        sub       rsp,20
        lea       rcx,[MT_System.ArgumentException]
-       call      qword ptr [7FFA48549870]; CORINFO_HELP_NEWSFAST
+       call      qword ptr [7FFDC7889870]; CORINFO_HELP_NEWSFAST
        mov       rsi,rax
        mov       ecx,374C
-       call      00007FFA4854A776
+       call      00007FFDC788A776
        mov       rcx,rax
-       call      qword ptr [7FFA48017E98]; System.Environment.GetResourceFromDefault(System.String)
+       call      qword ptr [7FFDC7357E98]; System.Environment.GetResourceFromDefault(System.String)
        mov       rdx,rax
        mov       rcx,rsi
        nop
        call      System.ArgumentException..ctor(System.String)
        mov       rcx,rsi
-       call      00007FFA4854A76A
+       call      00007FFDC788A76A
        int       3
 ; Total bytes of code 61
 ```
@@ -590,18 +645,18 @@ M04_L01:
        mov       rsi,rcx
        mov       ecx,[rsi+3C]
        test      ecx,1600000
-       je        near ptr 00007FFA49362C22
+       je        near ptr 00007FFDC86A2C22
        mov       rcx,rsi
        nop
        call      System.Threading.Tasks.Task.NotifyDebuggerOfWaitCompletionIfNecessary()
        mov       ecx,[rsi+3C]
        and       ecx,1600000
        cmp       ecx,1000000
-       je        near ptr 00007FFA49362C1C
+       je        near ptr 00007FFDC86A2C1C
        mov       rcx,rsi
        nop
        call      System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(System.Threading.Tasks.Task)
-       jmp       near ptr 00007FFA49362C1C
+       jmp       near ptr 00007FFDC86A2C1C
        int       3
        int       3
        int       3
@@ -725,8 +780,9 @@ M02_L00:
        mov       [rbp+18],rcx
        mov       rcx,rsi
        mov       rdx,rbp
+       mov       r8d,80000
        cmp       [rcx],ecx
-       call      System.Threading.Tasks.Task.ContinueWith(System.Action`1<System.Threading.Tasks.Task>)
+       call      System.Threading.Tasks.Task.ContinueWith(System.Action`1<System.Threading.Tasks.Task>, System.Threading.Tasks.TaskContinuationOptions)
        mov       rax,rdi
        add       rsp,28
        pop       rbx
@@ -734,7 +790,7 @@ M02_L00:
        pop       rsi
        pop       rdi
        ret
-; Total bytes of code 218
+; Total bytes of code 224
 ```
 ```assembly
 ; Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring.Run(System.Func`2<System.Func`1<System.Threading.Tasks.Task>,System.Threading.Tasks.Task>)
@@ -775,14 +831,14 @@ M02_L00:
        mov       rcx,offset MD_System.Linq.Enumerable.Select[[System.Int32, mscorlib],[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, mscorlib]], mscorlib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>>)
        call      System.Linq.Enumerable.Select[[System.Int32, mscorlib],[System.__Canon, mscorlib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.__Canon>)
        mov       rsi,rax
-       mov       rcx,19CC7C5BD08
+       mov       rcx,1921ECF9F50
        mov       r8,[rcx]
        test      r8,r8
        jne       short M04_L00
        mov       rcx,offset MT_System.Func`2[[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, mscorlib]], mscorlib],[System.Threading.Tasks.Task, mscorlib]]
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
-       mov       rdx,19CC7C5BCF8
+       mov       rdx,1921ECF9F40
        mov       rdx,[rdx]
        test      rdx,rdx
        je        short M04_L01
@@ -790,7 +846,7 @@ M02_L00:
        call      CORINFO_HELP_ASSIGN_REF
        mov       rdx,offset Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring+<>c.<Run>b__10_1(System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>)
        mov       [rbx+18],rdx
-       mov       rcx,19CC7C5BD08
+       mov       rcx,1921ECF9F50
        mov       rdx,rbx
        call      CORINFO_HELP_CHECKED_ASSIGN_REF
        mov       r8,rbx
@@ -820,18 +876,18 @@ M04_L01:
        push      rsi
        sub       rsp,20
        lea       rcx,[MT_System.ArgumentException]
-       call      qword ptr [7FFA48549870]; CORINFO_HELP_NEWSFAST
+       call      qword ptr [7FFDC7889870]; CORINFO_HELP_NEWSFAST
        mov       rsi,rax
        mov       ecx,374C
-       call      00007FFA4854A776
+       call      00007FFDC788A776
        mov       rcx,rax
-       call      qword ptr [7FFA48017E98]; System.Environment.GetResourceFromDefault(System.String)
+       call      qword ptr [7FFDC7357E98]; System.Environment.GetResourceFromDefault(System.String)
        mov       rdx,rax
        mov       rcx,rsi
        nop
        call      System.ArgumentException..ctor(System.String)
        mov       rcx,rsi
-       call      00007FFA4854A76A
+       call      00007FFDC788A76A
        int       3
 ; Total bytes of code 61
 ```
@@ -842,18 +898,18 @@ M04_L01:
        mov       rsi,rcx
        mov       ecx,[rsi+3C]
        test      ecx,1600000
-       je        near ptr 00007FFA49362C22
+       je        near ptr 00007FFDC86A2C22
        mov       rcx,rsi
        nop
        call      System.Threading.Tasks.Task.NotifyDebuggerOfWaitCompletionIfNecessary()
        mov       ecx,[rsi+3C]
        and       ecx,1600000
        cmp       ecx,1000000
-       je        near ptr 00007FFA49362C1C
+       je        near ptr 00007FFDC86A2C1C
        mov       rcx,rsi
        nop
        call      System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(System.Threading.Tasks.Task)
-       jmp       near ptr 00007FFA49362C1C
+       jmp       near ptr 00007FFDC86A2C1C
        int       3
        int       3
        int       3
@@ -892,10 +948,10 @@ M04_L01:
        mov       rdx,[rbp+10]
        mov       rdx,[rdx+8]
        mov       rcx,[rbp-8]
-       mov       r8,7FF9543BC0C0
-       call      qword ptr [7FF95410B648]; System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
+       mov       r8,7FFC9D3EC0C0
+       call      qword ptr [7FFC9D13B648]; System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
        mov       rcx,[rbp-8]
-       call      qword ptr [7FF9543B16C0]; Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring.Run(System.Func`2<System.Func`1<System.Threading.Tasks.Task>,System.Threading.Tasks.Task>)
+       call      qword ptr [7FFC9D3E16C0]; Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring.Run(System.Func`2<System.Func`1<System.Threading.Tasks.Task>,System.Threading.Tasks.Task>)
        nop
        add       rsp,30
        pop       rbp
@@ -917,7 +973,7 @@ M04_L01:
        jne       short M02_L00
        ret
 M02_L00:
-       jmp       qword ptr [7FF95452BAC8]; System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(System.Threading.Tasks.Task)
+       jmp       qword ptr [7FFC9D55DAC8]; System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(System.Threading.Tasks.Task)
 ; Total bytes of code 25
 ```
 ```assembly
@@ -937,7 +993,7 @@ M02_L00:
        pop       rdi
        ret
 M03_L00:
-       call      qword ptr [7FF95410B630]
+       call      qword ptr [7FFC9D13B630]
        int       3
 ; Total bytes of code 44
 ```
@@ -959,7 +1015,7 @@ M04_L00:
        call      CORINFO_HELP_NEWSFAST
        mov       [rbp-10],rax
        mov       rcx,[rbp-10]
-       call      qword ptr [7FF95452BB40]; Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring+<>c__DisplayClass10_0..ctor()
+       call      qword ptr [7FFC9D55DB40]; Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring+<>c__DisplayClass10_0..ctor()
        mov       rdx,[rbp-10]
        mov       [rbp-8],rdx
        mov       rdx,[rbp-8]
@@ -971,7 +1027,7 @@ M04_L00:
        mov       [rbp-18],rax
        mov       rcx,[rbp-18]
        xor       edx,edx
-       call      qword ptr [7FF95452D108]; System.Threading.ManualResetEvent..ctor(Boolean)
+       call      qword ptr [7FFC9D55F108]; System.Threading.ManualResetEvent..ctor(Boolean)
        mov       rdx,[rbp-8]
        lea       rcx,[rdx+8]
        mov       rdx,[rbp-18]
@@ -981,21 +1037,21 @@ M04_L00:
        mov       [rbp-20],rax
        xor       ecx,ecx
        mov       edx,8
-       call      qword ptr [7FF954271240]; System.Linq.Enumerable.Range(Int32, Int32)
+       call      qword ptr [7FFC9D2A1240]; System.Linq.Enumerable.Range(Int32, Int32)
        mov       [rbp-28],rax
        mov       rcx,[rbp-20]
        mov       rdx,[rbp-8]
-       mov       r8,7FF95452AB58
-       call      qword ptr [7FF95410B648]; System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
+       mov       r8,7FFC9D55CB58
+       call      qword ptr [7FFC9D13B648]; System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
        mov       r8,[rbp-20]
        mov       rdx,[rbp-28]
        mov       rcx,offset MD_System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>>)
-       call      qword ptr [7FF95452D6C0]; System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.__Canon>)
+       call      qword ptr [7FFC9D55F6C0]; System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.__Canon>)
        mov       [rbp-38],rax
-       mov       rcx,7FF954394968
-       mov       edx,0F
+       mov       rcx,7FFC9D3C4978
+       mov       edx,11
        call      CORINFO_HELP_GETSHARED_NONGCSTATIC_BASE
-       mov       rcx,22FFD406438
+       mov       rcx,1C0DC406438
        mov       rcx,[rcx]
        mov       [rbp-30],rcx
        mov       rcx,[rbp-38]
@@ -1007,21 +1063,21 @@ M04_L00:
        mov       rcx,offset MT_System.Func`2[[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib],[System.Threading.Tasks.Task, System.Private.CoreLib]]
        call      CORINFO_HELP_NEWSFAST
        mov       [rbp-58],rax
-       mov       rcx,7FF954394968
-       mov       edx,0F
+       mov       rcx,7FFC9D3C4978
+       mov       edx,11
        call      CORINFO_HELP_GETSHARED_NONGCSTATIC_BASE
-       mov       rdx,22FFD406428
+       mov       rdx,1C0DC406428
        mov       rdx,[rdx]
        mov       [rbp-60],rdx
        mov       rdx,[rbp-60]
        mov       rcx,[rbp-58]
-       mov       r8,7FF95452C738
-       call      qword ptr [7FF95410B648]; System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
-       mov       rcx,7FF954394968
-       mov       edx,0F
+       mov       r8,7FFC9D55E738
+       call      qword ptr [7FFC9D13B648]; System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
+       mov       rcx,7FFC9D3C4978
+       mov       edx,11
        call      CORINFO_HELP_GETSHARED_NONGCSTATIC_BASE
        mov       rdx,[rbp-58]
-       mov       rcx,22FFD406438
+       mov       rcx,1C0DC406438
        call      CORINFO_HELP_ASSIGN_REF
        mov       r8,[rbp-58]
        mov       [rbp-48],r8
@@ -1029,14 +1085,14 @@ M04_L01:
        mov       r8,[rbp-48]
        mov       rdx,[rbp-40]
        mov       rcx,offset MD_System.Linq.Enumerable.Select[[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib],[System.Threading.Tasks.Task, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>>, System.Func`2<System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>,System.Threading.Tasks.Task>)
-       call      qword ptr [7FF9544C3438]; System.Linq.Enumerable.Select[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>, System.Func`2<System.__Canon,System.__Canon>)
+       call      qword ptr [7FFC9D4E3438]; System.Linq.Enumerable.Select[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>, System.Func`2<System.__Canon,System.__Canon>)
        mov       [rbp-50],rax
        mov       rcx,[rbp-8]
        mov       rcx,[rcx+8]
        cmp       [rcx],ecx
-       call      qword ptr [7FF95452D0D8]; System.Threading.EventWaitHandle.Set()
+       call      qword ptr [7FFC9D55F0D8]; System.Threading.EventWaitHandle.Set()
        mov       rcx,[rbp-50]
-       call      qword ptr [7FF95433B348]; System.Threading.Tasks.Task.WhenAll(System.Collections.Generic.IEnumerable`1<System.Threading.Tasks.Task>)
+       call      qword ptr [7FFC9D36B348]; System.Threading.Tasks.Task.WhenAll(System.Collections.Generic.IEnumerable`1<System.Threading.Tasks.Task>)
        nop
        add       rsp,80
        pop       rbp
@@ -1053,16 +1109,16 @@ M04_L01:
        mov       rcx,rsi
        xor       r8d,r8d
        mov       edx,0FFFFFFFF
-       call      qword ptr [7FF9B3A3BA60]; Precode of System.Threading.Tasks.Task.InternalWaitCore(Int32, System.Threading.CancellationToken)
+       call      qword ptr [7FFCED29BA60]; Precode of System.Threading.Tasks.Task.InternalWaitCore(Int32, System.Threading.CancellationToken)
 M05_L00:
        mov       rcx,rsi
-       call      qword ptr [7FF9B3A3B840]; Precode of System.Threading.Tasks.Task.NotifyDebuggerOfWaitCompletionIfNecessary()
+       call      qword ptr [7FFCED29B840]; Precode of System.Threading.Tasks.Task.NotifyDebuggerOfWaitCompletionIfNecessary()
        mov       ecx,[rsi+34]
        and       ecx,1600000
        cmp       ecx,1000000
        je        short M05_L01
        mov       rcx,rsi
-       call      qword ptr [7FF9B3A3D738]
+       call      qword ptr [7FFCED29D738]
 M05_L01:
        nop
        add       rsp,20
@@ -1193,20 +1249,20 @@ M03_L01:
        mov       rcx,offset MD_System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>>)
        call      System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.__Canon>)
        mov       rsi,rax
-       mov       rcx,172D8B376C0
+       mov       rcx,25372467430
        mov       r8,[rcx]
        test      r8,r8
        jne       short M04_L00
        mov       rcx,offset MT_System.Func`2[[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib],[System.Threading.Tasks.Task, System.Private.CoreLib]]
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
-       mov       rdx,172D8B376B0
+       mov       rdx,25372467420
        mov       rdx,[rdx]
        lea       rcx,[rbx+8]
        call      CORINFO_HELP_ASSIGN_REF
        mov       rdx,offset Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring+<>c.<Run>b__10_1(System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>)
        mov       [rbx+18],rdx
-       mov       rcx,172D8B376C0
+       mov       rcx,25372467430
        mov       rdx,rbx
        call      CORINFO_HELP_CHECKED_ASSIGN_REF
        mov       r8,rbx
@@ -1275,15 +1331,15 @@ System.MulticastDelegate.ThrowNullThisInDelegateToInstance()
        je        short M00_L00
        lea       rcx,[rdi+8]
        call      CORINFO_HELP_ASSIGN_REF
-       mov       rcx,7FF9543AAA38
+       mov       rcx,7FFC9D3EAA38
        mov       [rdi+18],rcx
        mov       rcx,rdi
        add       rsp,28
        pop       rsi
        pop       rdi
-       jmp       qword ptr [7FF9543A16C0]; Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring.Run(System.Func`2<System.Func`1<System.Threading.Tasks.Task>,System.Threading.Tasks.Task>)
+       jmp       qword ptr [7FFC9D3E16C0]; Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring.Run(System.Func`2<System.Func`1<System.Threading.Tasks.Task>,System.Threading.Tasks.Task>)
 M00_L00:
-       call      qword ptr [7FF9540FB630]
+       call      qword ptr [7FFC9D13B630]
        int       3
 ; Total bytes of code 81
 ```
@@ -1302,7 +1358,7 @@ M00_L00:
        jne       short M02_L00
        ret
 M02_L00:
-       jmp       qword ptr [7FF9545576C0]; System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(System.Threading.Tasks.Task)
+       jmp       qword ptr [7FFC9D5976C0]; System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(System.Threading.Tasks.Task)
 ; Total bytes of code 25
 ```
 ```assembly
@@ -1329,7 +1385,7 @@ M02_L00:
        xor       edx,edx
        mov       r8d,1
        xor       r9d,r9d
-       call      qword ptr [7FF954557C00]; System.Threading.EventWaitHandle.CreateEventCore(Boolean, System.Threading.EventResetMode, System.String, Boolean ByRef)
+       call      qword ptr [7FFC9D597C00]; System.Threading.EventWaitHandle.CreateEventCore(Boolean, System.Threading.EventResetMode, System.String, Boolean ByRef)
        lea       rcx,[rdi+8]
        mov       rdx,rsi
        call      CORINFO_HELP_ASSIGN_REF
@@ -1347,40 +1403,40 @@ M02_L00:
        lea       rcx,[rbx+8]
        mov       rdx,rdi
        call      CORINFO_HELP_ASSIGN_REF
-       mov       r8,7FF954556750
+       mov       r8,7FFC9D596750
        mov       [rbx+18],r8
        mov       r8,rbx
        mov       rdx,rsi
        mov       rcx,offset MD_System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>>)
-       call      qword ptr [7FF9545595A0]; System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.__Canon>)
+       call      qword ptr [7FFC9D5995A0]; System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.__Canon>)
        mov       rsi,rax
-       mov       rcx,1C29C4066C8
+       mov       rcx,28707C06450
        mov       r8,[rcx]
        test      r8,r8
        jne       short M03_L00
        mov       rcx,offset MT_System.Func`2[[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib],[System.Threading.Tasks.Task, System.Private.CoreLib]]
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
-       mov       rdx,1C29C4066B8
+       mov       rdx,28707C06440
        mov       rdx,[rdx]
        lea       rcx,[rbx+8]
        call      CORINFO_HELP_ASSIGN_REF
-       mov       rdx,7FF954558618
+       mov       rdx,7FFC9D598618
        mov       [rbx+18],rdx
-       mov       rcx,1C29C4066C8
+       mov       rcx,28707C06450
        mov       rdx,rbx
        call      CORINFO_HELP_ASSIGN_REF
        mov       r8,rbx
 M03_L00:
        mov       rdx,rsi
        mov       rcx,offset MD_System.Linq.Enumerable.Select[[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib],[System.Threading.Tasks.Task, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>>, System.Func`2<System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>,System.Threading.Tasks.Task>)
-       call      qword ptr [7FF9544B1510]; System.Linq.Enumerable.Select[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>, System.Func`2<System.__Canon,System.__Canon>)
+       call      qword ptr [7FFC9D4F1510]; System.Linq.Enumerable.Select[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>, System.Func`2<System.__Canon,System.__Canon>)
        mov       rsi,rax
        mov       rcx,[rdi+8]
        cmp       [rcx],ecx
-       call      qword ptr [7FF954557C48]; System.Threading.EventWaitHandle.Set()
+       call      qword ptr [7FFC9D597C48]; System.Threading.EventWaitHandle.Set()
        mov       rcx,rsi
-       call      qword ptr [7FF95432B348]; System.Threading.Tasks.Task.WhenAll(System.Collections.Generic.IEnumerable`1<System.Threading.Tasks.Task>)
+       call      qword ptr [7FFC9D36B348]; System.Threading.Tasks.Task.WhenAll(System.Collections.Generic.IEnumerable`1<System.Threading.Tasks.Task>)
        nop
        add       rsp,30
        pop       rbx
@@ -1399,16 +1455,16 @@ M03_L00:
        mov       rcx,rsi
        xor       r8d,r8d
        mov       edx,0FFFFFFFF
-       call      qword ptr [7FF954329AE0]; System.Threading.Tasks.Task.InternalWaitCore(Int32, System.Threading.CancellationToken)
+       call      qword ptr [7FFC9D369AE0]; System.Threading.Tasks.Task.InternalWaitCore(Int32, System.Threading.CancellationToken)
 M04_L00:
        mov       rcx,rsi
-       call      qword ptr [7FF954329270]; System.Threading.Tasks.Task.NotifyDebuggerOfWaitCompletionIfNecessary()
+       call      qword ptr [7FFC9D369270]; System.Threading.Tasks.Task.NotifyDebuggerOfWaitCompletionIfNecessary()
        mov       ecx,[rsi+34]
        and       ecx,1600000
        cmp       ecx,1000000
        je        short M04_L01
        mov       rcx,rsi
-       call      qword ptr [7FF9545576D8]
+       call      qword ptr [7FFC9D5976D8]
 M04_L01:
        nop
        add       rsp,20
@@ -1541,14 +1597,14 @@ M02_L00:
        mov       rcx,offset MD_System.Linq.Enumerable.Select[[System.Int32, mscorlib],[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, mscorlib]], mscorlib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>>)
        call      System.Linq.Enumerable.Select[[System.Int32, mscorlib],[System.__Canon, mscorlib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.__Canon>)
        mov       rsi,rax
-       mov       rcx,1891000BD08
+       mov       rcx,19C50AD9F50
        mov       r8,[rcx]
        test      r8,r8
        jne       short M04_L00
        mov       rcx,offset MT_System.Func`2[[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, mscorlib]], mscorlib],[System.Threading.Tasks.Task, mscorlib]]
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
-       mov       rdx,1891000BCF8
+       mov       rdx,19C50AD9F40
        mov       rdx,[rdx]
        test      rdx,rdx
        je        short M04_L01
@@ -1556,7 +1612,7 @@ M02_L00:
        call      CORINFO_HELP_ASSIGN_REF
        mov       rdx,offset Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring+<>c.<Run>b__10_1(System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>)
        mov       [rbx+18],rdx
-       mov       rcx,1891000BD08
+       mov       rcx,19C50AD9F50
        mov       rdx,rbx
        call      CORINFO_HELP_CHECKED_ASSIGN_REF
        mov       r8,rbx
@@ -1586,18 +1642,18 @@ M04_L01:
        push      rsi
        sub       rsp,20
        lea       rcx,[MT_System.ArgumentException]
-       call      qword ptr [7FFA48549870]; CORINFO_HELP_NEWSFAST
+       call      qword ptr [7FFDC7889870]; CORINFO_HELP_NEWSFAST
        mov       rsi,rax
        mov       ecx,374C
-       call      00007FFA4854A776
+       call      00007FFDC788A776
        mov       rcx,rax
-       call      qword ptr [7FFA48017E98]; System.Environment.GetResourceFromDefault(System.String)
+       call      qword ptr [7FFDC7357E98]; System.Environment.GetResourceFromDefault(System.String)
        mov       rdx,rax
        mov       rcx,rsi
        nop
        call      System.ArgumentException..ctor(System.String)
        mov       rcx,rsi
-       call      00007FFA4854A76A
+       call      00007FFDC788A76A
        int       3
 ; Total bytes of code 61
 ```
@@ -1608,18 +1664,18 @@ M04_L01:
        mov       rsi,rcx
        mov       ecx,[rsi+3C]
        test      ecx,1600000
-       je        near ptr 00007FFA49362C22
+       je        near ptr 00007FFDC86A2C22
        mov       rcx,rsi
        nop
        call      System.Threading.Tasks.Task.NotifyDebuggerOfWaitCompletionIfNecessary()
        mov       ecx,[rsi+3C]
        and       ecx,1600000
        cmp       ecx,1000000
-       je        near ptr 00007FFA49362C1C
+       je        near ptr 00007FFDC86A2C1C
        mov       rcx,rsi
        nop
        call      System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(System.Threading.Tasks.Task)
-       jmp       near ptr 00007FFA49362C1C
+       jmp       near ptr 00007FFDC86A2C1C
        int       3
        int       3
        int       3
@@ -1767,14 +1823,14 @@ M02_L00:
        mov       rcx,offset MD_System.Linq.Enumerable.Select[[System.Int32, mscorlib],[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, mscorlib]], mscorlib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>>)
        call      System.Linq.Enumerable.Select[[System.Int32, mscorlib],[System.__Canon, mscorlib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.__Canon>)
        mov       rsi,rax
-       mov       rcx,2DC9806BD08
+       mov       rcx,1D266A99F50
        mov       r8,[rcx]
        test      r8,r8
        jne       short M04_L00
        mov       rcx,offset MT_System.Func`2[[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, mscorlib]], mscorlib],[System.Threading.Tasks.Task, mscorlib]]
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
-       mov       rdx,2DC9806BCF8
+       mov       rdx,1D266A99F40
        mov       rdx,[rdx]
        test      rdx,rdx
        je        short M04_L01
@@ -1782,7 +1838,7 @@ M02_L00:
        call      CORINFO_HELP_ASSIGN_REF
        mov       rdx,offset Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring+<>c.<Run>b__10_1(System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>)
        mov       [rbx+18],rdx
-       mov       rcx,2DC9806BD08
+       mov       rcx,1D266A99F50
        mov       rdx,rbx
        call      CORINFO_HELP_CHECKED_ASSIGN_REF
        mov       r8,rbx
@@ -1812,18 +1868,18 @@ M04_L01:
        push      rsi
        sub       rsp,20
        lea       rcx,[MT_System.ArgumentException]
-       call      qword ptr [7FFA48549870]; CORINFO_HELP_NEWSFAST
+       call      qword ptr [7FFDC7889870]; CORINFO_HELP_NEWSFAST
        mov       rsi,rax
        mov       ecx,374C
-       call      00007FFA4854A776
+       call      00007FFDC788A776
        mov       rcx,rax
-       call      qword ptr [7FFA48017E98]; System.Environment.GetResourceFromDefault(System.String)
+       call      qword ptr [7FFDC7357E98]; System.Environment.GetResourceFromDefault(System.String)
        mov       rdx,rax
        mov       rcx,rsi
        nop
        call      System.ArgumentException..ctor(System.String)
        mov       rcx,rsi
-       call      00007FFA4854A76A
+       call      00007FFDC788A76A
        int       3
 ; Total bytes of code 61
 ```
@@ -1834,18 +1890,18 @@ M04_L01:
        mov       rsi,rcx
        mov       ecx,[rsi+3C]
        test      ecx,1600000
-       je        near ptr 00007FFA49362C22
+       je        near ptr 00007FFDC86A2C22
        mov       rcx,rsi
        nop
        call      System.Threading.Tasks.Task.NotifyDebuggerOfWaitCompletionIfNecessary()
        mov       ecx,[rsi+3C]
        and       ecx,1600000
        cmp       ecx,1000000
-       je        near ptr 00007FFA49362C1C
+       je        near ptr 00007FFDC86A2C1C
        mov       rcx,rsi
        nop
        call      System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(System.Threading.Tasks.Task)
-       jmp       near ptr 00007FFA49362C1C
+       jmp       near ptr 00007FFDC86A2C1C
        int       3
        int       3
        int       3
@@ -1884,10 +1940,10 @@ M04_L01:
        mov       rdx,[rbp+10]
        mov       rdx,[rdx+10]
        mov       rcx,[rbp-8]
-       mov       r8,7FF95438C0F0
-       call      qword ptr [7FF9540DB648]; System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
+       mov       r8,7FFC9D3EC0F0
+       call      qword ptr [7FFC9D13B648]; System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
        mov       rcx,[rbp-8]
-       call      qword ptr [7FF9543816C0]; Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring.Run(System.Func`2<System.Func`1<System.Threading.Tasks.Task>,System.Threading.Tasks.Task>)
+       call      qword ptr [7FFC9D3E16C0]; Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring.Run(System.Func`2<System.Func`1<System.Threading.Tasks.Task>,System.Threading.Tasks.Task>)
        nop
        add       rsp,30
        pop       rbp
@@ -1909,7 +1965,7 @@ M04_L01:
        jne       short M02_L00
        ret
 M02_L00:
-       jmp       qword ptr [7FF9544FDAC8]; System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(System.Threading.Tasks.Task)
+       jmp       qword ptr [7FFC9D55DAC8]; System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(System.Threading.Tasks.Task)
 ; Total bytes of code 25
 ```
 ```assembly
@@ -1922,14 +1978,14 @@ M02_L00:
        test      rdx,rdx
        je        short M03_L00
        lea       rcx,[rsi+8]
-       call      qword ptr [7FF9B3A297A8]; CORINFO_HELP_ASSIGN_REF
+       call      qword ptr [7FFCED2897A8]; CORINFO_HELP_ASSIGN_REF
        mov       [rsi+18],rdi
        add       rsp,28
        pop       rsi
        pop       rdi
        ret
 M03_L00:
-       call      qword ptr [7FF9B3A35870]
+       call      qword ptr [7FFCED295870]
        int       3
 ; Total bytes of code 45
 ```
@@ -1951,7 +2007,7 @@ M04_L00:
        call      CORINFO_HELP_NEWSFAST
        mov       [rbp-10],rax
        mov       rcx,[rbp-10]
-       call      qword ptr [7FF9544FDB40]; Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring+<>c__DisplayClass10_0..ctor()
+       call      qword ptr [7FFC9D55DB40]; Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring+<>c__DisplayClass10_0..ctor()
        mov       rdx,[rbp-10]
        mov       [rbp-8],rdx
        mov       rdx,[rbp-8]
@@ -1963,7 +2019,7 @@ M04_L00:
        mov       [rbp-18],rax
        mov       rcx,[rbp-18]
        xor       edx,edx
-       call      qword ptr [7FF9544FF108]; System.Threading.ManualResetEvent..ctor(Boolean)
+       call      qword ptr [7FFC9D55F108]; System.Threading.ManualResetEvent..ctor(Boolean)
        mov       rdx,[rbp-8]
        lea       rcx,[rdx+8]
        mov       rdx,[rbp-18]
@@ -1973,21 +2029,21 @@ M04_L00:
        mov       [rbp-20],rax
        xor       ecx,ecx
        mov       edx,8
-       call      qword ptr [7FF954241240]; System.Linq.Enumerable.Range(Int32, Int32)
+       call      qword ptr [7FFC9D2A1240]; System.Linq.Enumerable.Range(Int32, Int32)
        mov       [rbp-28],rax
        mov       rcx,[rbp-20]
        mov       rdx,[rbp-8]
-       mov       r8,7FF9544FCB58
-       call      qword ptr [7FF9540DB648]; System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
+       mov       r8,7FFC9D55CB58
+       call      qword ptr [7FFC9D13B648]; System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
        mov       r8,[rbp-20]
        mov       rdx,[rbp-28]
        mov       rcx,offset MD_System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>>)
-       call      qword ptr [7FF9544FF6C0]; System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.__Canon>)
+       call      qword ptr [7FFC9D55F6C0]; System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.__Canon>)
        mov       [rbp-38],rax
-       mov       rcx,7FF954364968
-       mov       edx,0F
+       mov       rcx,7FFC9D3C4978
+       mov       edx,11
        call      CORINFO_HELP_GETSHARED_NONGCSTATIC_BASE
-       mov       rcx,1D560C06438
+       mov       rcx,27F79C06438
        mov       rcx,[rcx]
        mov       [rbp-30],rcx
        mov       rcx,[rbp-38]
@@ -1999,21 +2055,21 @@ M04_L00:
        mov       rcx,offset MT_System.Func`2[[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib],[System.Threading.Tasks.Task, System.Private.CoreLib]]
        call      CORINFO_HELP_NEWSFAST
        mov       [rbp-58],rax
-       mov       rcx,7FF954364968
-       mov       edx,0F
+       mov       rcx,7FFC9D3C4978
+       mov       edx,11
        call      CORINFO_HELP_GETSHARED_NONGCSTATIC_BASE
-       mov       rdx,1D560C06428
+       mov       rdx,27F79C06428
        mov       rdx,[rdx]
        mov       [rbp-60],rdx
        mov       rdx,[rbp-60]
        mov       rcx,[rbp-58]
-       mov       r8,7FF9544FE738
-       call      qword ptr [7FF9540DB648]; System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
-       mov       rcx,7FF954364968
-       mov       edx,0F
+       mov       r8,7FFC9D55E738
+       call      qword ptr [7FFC9D13B648]; System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
+       mov       rcx,7FFC9D3C4978
+       mov       edx,11
        call      CORINFO_HELP_GETSHARED_NONGCSTATIC_BASE
        mov       rdx,[rbp-58]
-       mov       rcx,1D560C06438
+       mov       rcx,27F79C06438
        call      CORINFO_HELP_ASSIGN_REF
        mov       r8,[rbp-58]
        mov       [rbp-48],r8
@@ -2021,14 +2077,14 @@ M04_L01:
        mov       r8,[rbp-48]
        mov       rdx,[rbp-40]
        mov       rcx,offset MD_System.Linq.Enumerable.Select[[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib],[System.Threading.Tasks.Task, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>>, System.Func`2<System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>,System.Threading.Tasks.Task>)
-       call      qword ptr [7FF954493438]; System.Linq.Enumerable.Select[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>, System.Func`2<System.__Canon,System.__Canon>)
+       call      qword ptr [7FFC9D4E3438]; System.Linq.Enumerable.Select[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>, System.Func`2<System.__Canon,System.__Canon>)
        mov       [rbp-50],rax
        mov       rcx,[rbp-8]
        mov       rcx,[rcx+8]
        cmp       [rcx],ecx
-       call      qword ptr [7FF9544FF0D8]; System.Threading.EventWaitHandle.Set()
+       call      qword ptr [7FFC9D55F0D8]; System.Threading.EventWaitHandle.Set()
        mov       rcx,[rbp-50]
-       call      qword ptr [7FF95430B348]; System.Threading.Tasks.Task.WhenAll(System.Collections.Generic.IEnumerable`1<System.Threading.Tasks.Task>)
+       call      qword ptr [7FFC9D36B348]; System.Threading.Tasks.Task.WhenAll(System.Collections.Generic.IEnumerable`1<System.Threading.Tasks.Task>)
        nop
        add       rsp,80
        pop       rbp
@@ -2045,16 +2101,16 @@ M04_L01:
        mov       rcx,rsi
        xor       r8d,r8d
        mov       edx,0FFFFFFFF
-       call      qword ptr [7FF9B3A3BA60]; Precode of System.Threading.Tasks.Task.InternalWaitCore(Int32, System.Threading.CancellationToken)
+       call      qword ptr [7FFCED29BA60]; Precode of System.Threading.Tasks.Task.InternalWaitCore(Int32, System.Threading.CancellationToken)
 M05_L00:
        mov       rcx,rsi
-       call      qword ptr [7FF9B3A3B840]; Precode of System.Threading.Tasks.Task.NotifyDebuggerOfWaitCompletionIfNecessary()
+       call      qword ptr [7FFCED29B840]; Precode of System.Threading.Tasks.Task.NotifyDebuggerOfWaitCompletionIfNecessary()
        mov       ecx,[rsi+34]
        and       ecx,1600000
        cmp       ecx,1000000
        je        short M05_L01
        mov       rcx,rsi
-       call      qword ptr [7FF9B3A3D738]
+       call      qword ptr [7FFCED29D738]
 M05_L01:
        nop
        add       rsp,20
@@ -2150,7 +2206,7 @@ M02_L00:
        mov       rbx,rax
        test      rbx,rbx
        jne       short M03_L00
-       mov       rcx,1CB45481A68
+       mov       rcx,26430861A68
        mov       rbx,[rcx]
 M03_L00:
        test      rbx,rbx
@@ -2186,7 +2242,7 @@ M03_L04:
        mov       rdi,rax
        test      rdi,rdi
        je        short M03_L01
-       mov       rcx,1CB45481890
+       mov       rcx,26430861890
        cmp       rdi,[rcx]
        je        short M03_L05
        mov       rcx,r15
@@ -2198,8 +2254,7 @@ M03_L05:
        lea       rcx,[r15+40]
        mov       rdx,r14
        call      CORINFO_HELP_ASSIGN_REF
-       xor       ecx,ecx
-       mov       [rsp+20],ecx
+       mov       dword ptr [rsp+20],80000
        mov       rcx,r14
        mov       rdx,r15
        mov       r8,rbx
@@ -2250,7 +2305,7 @@ M03_L07:
        pop       r15
        pop       rbp
        ret
-; Total bytes of code 465
+; Total bytes of code 467
 ```
 ```assembly
 ; Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring.Run(System.Func`2<System.Func`1<System.Threading.Tasks.Task>,System.Threading.Tasks.Task>)
@@ -2301,20 +2356,20 @@ M03_L07:
        mov       rcx,offset MD_System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>>)
        call      System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.__Canon>)
        mov       rsi,rax
-       mov       rcx,1CB454876C0
+       mov       rcx,26430867430
        mov       r8,[rcx]
        test      r8,r8
        jne       short M04_L00
        mov       rcx,offset MT_System.Func`2[[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib],[System.Threading.Tasks.Task, System.Private.CoreLib]]
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
-       mov       rdx,1CB454876B0
+       mov       rdx,26430867420
        mov       rdx,[rdx]
        lea       rcx,[rbx+8]
        call      CORINFO_HELP_ASSIGN_REF
        mov       rdx,offset Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring+<>c.<Run>b__10_1(System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>)
        mov       [rbx+18],rdx
-       mov       rcx,1CB454876C0
+       mov       rcx,26430867430
        mov       rdx,rbx
        call      CORINFO_HELP_CHECKED_ASSIGN_REF
        mov       r8,rbx
@@ -2383,15 +2438,15 @@ System.MulticastDelegate.ThrowNullThisInDelegateToInstance()
        je        short M00_L00
        lea       rcx,[rdi+8]
        call      CORINFO_HELP_ASSIGN_REF
-       mov       rcx,7FF95438AA68
+       mov       rcx,7FFC9D3FAA68
        mov       [rdi+18],rcx
        mov       rcx,rdi
        add       rsp,28
        pop       rsi
        pop       rdi
-       jmp       qword ptr [7FF9543816C0]; Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring.Run(System.Func`2<System.Func`1<System.Threading.Tasks.Task>,System.Threading.Tasks.Task>)
+       jmp       qword ptr [7FFC9D3F16C0]; Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring.Run(System.Func`2<System.Func`1<System.Threading.Tasks.Task>,System.Threading.Tasks.Task>)
 M00_L00:
-       call      qword ptr [7FF9540DB630]
+       call      qword ptr [7FFC9D14B630]
        int       3
 ; Total bytes of code 81
 ```
@@ -2410,7 +2465,7 @@ M00_L00:
        jne       short M02_L00
        ret
 M02_L00:
-       jmp       qword ptr [7FF9545373C0]; System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(System.Threading.Tasks.Task)
+       jmp       qword ptr [7FFC9D5A76C0]; System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(System.Threading.Tasks.Task)
 ; Total bytes of code 25
 ```
 ```assembly
@@ -2437,7 +2492,7 @@ M02_L00:
        xor       edx,edx
        mov       r8d,1
        xor       r9d,r9d
-       call      qword ptr [7FF954537900]; System.Threading.EventWaitHandle.CreateEventCore(Boolean, System.Threading.EventResetMode, System.String, Boolean ByRef)
+       call      qword ptr [7FFC9D5A7C00]; System.Threading.EventWaitHandle.CreateEventCore(Boolean, System.Threading.EventResetMode, System.String, Boolean ByRef)
        lea       rcx,[rdi+8]
        mov       rdx,rsi
        call      CORINFO_HELP_ASSIGN_REF
@@ -2455,40 +2510,40 @@ M02_L00:
        lea       rcx,[rbx+8]
        mov       rdx,rdi
        call      CORINFO_HELP_ASSIGN_REF
-       mov       r8,7FF954536450
+       mov       r8,7FFC9D5A6750
        mov       [rbx+18],r8
        mov       r8,rbx
        mov       rdx,rsi
        mov       rcx,offset MD_System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>>)
-       call      qword ptr [7FF954537F30]; System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.__Canon>)
+       call      qword ptr [7FFC9D5A95A0]; System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.__Canon>)
        mov       rsi,rax
-       mov       rcx,1F7554066C8
+       mov       rcx,210D1406450
        mov       r8,[rcx]
        test      r8,r8
        jne       short M03_L00
        mov       rcx,offset MT_System.Func`2[[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib],[System.Threading.Tasks.Task, System.Private.CoreLib]]
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
-       mov       rdx,1F7554066B8
+       mov       rdx,210D1406440
        mov       rdx,[rdx]
        lea       rcx,[rbx+8]
        call      CORINFO_HELP_ASSIGN_REF
-       mov       rdx,7FF954536FA8
+       mov       rdx,7FFC9D5A8618
        mov       [rbx+18],rdx
-       mov       rcx,1F7554066C8
+       mov       rcx,210D1406450
        mov       rdx,rbx
        call      CORINFO_HELP_ASSIGN_REF
        mov       r8,rbx
 M03_L00:
        mov       rdx,rsi
        mov       rcx,offset MD_System.Linq.Enumerable.Select[[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib],[System.Threading.Tasks.Task, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>>, System.Func`2<System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>,System.Threading.Tasks.Task>)
-       call      qword ptr [7FF954491510]; System.Linq.Enumerable.Select[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>, System.Func`2<System.__Canon,System.__Canon>)
+       call      qword ptr [7FFC9D501510]; System.Linq.Enumerable.Select[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>, System.Func`2<System.__Canon,System.__Canon>)
        mov       rsi,rax
        mov       rcx,[rdi+8]
        cmp       [rcx],ecx
-       call      qword ptr [7FF954537948]; System.Threading.EventWaitHandle.Set()
+       call      qword ptr [7FFC9D5A7C48]; System.Threading.EventWaitHandle.Set()
        mov       rcx,rsi
-       call      qword ptr [7FF95430B348]; System.Threading.Tasks.Task.WhenAll(System.Collections.Generic.IEnumerable`1<System.Threading.Tasks.Task>)
+       call      qword ptr [7FFC9D37B348]; System.Threading.Tasks.Task.WhenAll(System.Collections.Generic.IEnumerable`1<System.Threading.Tasks.Task>)
        nop
        add       rsp,30
        pop       rbx
@@ -2507,16 +2562,16 @@ M03_L00:
        mov       rcx,rsi
        xor       r8d,r8d
        mov       edx,0FFFFFFFF
-       call      qword ptr [7FF954309AE0]; System.Threading.Tasks.Task.InternalWaitCore(Int32, System.Threading.CancellationToken)
+       call      qword ptr [7FFC9D379AE0]; System.Threading.Tasks.Task.InternalWaitCore(Int32, System.Threading.CancellationToken)
 M04_L00:
        mov       rcx,rsi
-       call      qword ptr [7FF954309270]; System.Threading.Tasks.Task.NotifyDebuggerOfWaitCompletionIfNecessary()
+       call      qword ptr [7FFC9D379270]; System.Threading.Tasks.Task.NotifyDebuggerOfWaitCompletionIfNecessary()
        mov       ecx,[rsi+34]
        and       ecx,1600000
        cmp       ecx,1000000
        je        short M04_L01
        mov       rcx,rsi
-       call      qword ptr [7FF9545373D8]
+       call      qword ptr [7FFC9D5A76D8]
 M04_L01:
        nop
        add       rsp,20
@@ -2621,9 +2676,10 @@ M03_L00:
        mov       [rdi+18],rcx
        mov       rcx,r14
        mov       r8,rdi
-       mov       rdx,offset MD_System.Threading.Tasks.Task.ContinueWith[[System.Threading.Tasks.Task, mscorlib]](System.Func`2<System.Threading.Tasks.Task,System.Threading.Tasks.Task>)
+       mov       rdx,offset MD_System.Threading.Tasks.Task.ContinueWith[[System.Threading.Tasks.Task, mscorlib]](System.Func`2<System.Threading.Tasks.Task,System.Threading.Tasks.Task>, System.Threading.Tasks.TaskContinuationOptions)
+       mov       r9d,80000
        cmp       [rcx],ecx
-       call      System.Threading.Tasks.Task.ContinueWith[[System.__Canon, mscorlib]](System.Func`2<System.Threading.Tasks.Task,System.__Canon>)
+       call      System.Threading.Tasks.Task.ContinueWith[[System.__Canon, mscorlib]](System.Func`2<System.Threading.Tasks.Task,System.__Canon>, System.Threading.Tasks.TaskContinuationOptions)
        mov       rcx,rax
        call      System.Threading.Tasks.TaskExtensions.Unwrap(System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>)
        mov       [rbp-38],rax
@@ -2665,7 +2721,7 @@ M03_L02:
        pop       r14
        pop       rbp
        ret
-; Total bytes of code 272
+; Total bytes of code 278
 ```
 ```assembly
 ; Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring.Run(System.Func`2<System.Func`1<System.Threading.Tasks.Task>,System.Threading.Tasks.Task>)
@@ -2706,14 +2762,14 @@ M03_L02:
        mov       rcx,offset MD_System.Linq.Enumerable.Select[[System.Int32, mscorlib],[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, mscorlib]], mscorlib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>>)
        call      System.Linq.Enumerable.Select[[System.Int32, mscorlib],[System.__Canon, mscorlib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.__Canon>)
        mov       rsi,rax
-       mov       rcx,13B5324BD08
+       mov       rcx,17FB6D59F50
        mov       r8,[rcx]
        test      r8,r8
        jne       short M04_L00
        mov       rcx,offset MT_System.Func`2[[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, mscorlib]], mscorlib],[System.Threading.Tasks.Task, mscorlib]]
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
-       mov       rdx,13B5324BCF8
+       mov       rdx,17FB6D59F40
        mov       rdx,[rdx]
        test      rdx,rdx
        je        short M04_L01
@@ -2721,7 +2777,7 @@ M03_L02:
        call      CORINFO_HELP_ASSIGN_REF
        mov       rdx,offset Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring+<>c.<Run>b__10_1(System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>)
        mov       [rbx+18],rdx
-       mov       rcx,13B5324BD08
+       mov       rcx,17FB6D59F50
        mov       rdx,rbx
        call      CORINFO_HELP_CHECKED_ASSIGN_REF
        mov       r8,rbx
@@ -2751,18 +2807,18 @@ M04_L01:
        push      rsi
        sub       rsp,20
        lea       rcx,[MT_System.ArgumentException]
-       call      qword ptr [7FFA48549870]; CORINFO_HELP_NEWSFAST
+       call      qword ptr [7FFDC7889870]; CORINFO_HELP_NEWSFAST
        mov       rsi,rax
        mov       ecx,374C
-       call      00007FFA4854A776
+       call      00007FFDC788A776
        mov       rcx,rax
-       call      qword ptr [7FFA48017E98]; System.Environment.GetResourceFromDefault(System.String)
+       call      qword ptr [7FFDC7357E98]; System.Environment.GetResourceFromDefault(System.String)
        mov       rdx,rax
        mov       rcx,rsi
        nop
        call      System.ArgumentException..ctor(System.String)
        mov       rcx,rsi
-       call      00007FFA4854A76A
+       call      00007FFDC788A76A
        int       3
 ; Total bytes of code 61
 ```
@@ -2773,18 +2829,18 @@ M04_L01:
        mov       rsi,rcx
        mov       ecx,[rsi+3C]
        test      ecx,1600000
-       je        near ptr 00007FFA49362C22
+       je        near ptr 00007FFDC86A2C22
        mov       rcx,rsi
        nop
        call      System.Threading.Tasks.Task.NotifyDebuggerOfWaitCompletionIfNecessary()
        mov       ecx,[rsi+3C]
        and       ecx,1600000
        cmp       ecx,1000000
-       je        near ptr 00007FFA49362C1C
+       je        near ptr 00007FFDC86A2C1C
        mov       rcx,rsi
        nop
        call      System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(System.Threading.Tasks.Task)
-       jmp       near ptr 00007FFA49362C1C
+       jmp       near ptr 00007FFDC86A2C1C
        int       3
        int       3
        int       3
@@ -2904,9 +2960,10 @@ M03_L00:
        mov       [rdi+18],rcx
        mov       rcx,r14
        mov       r8,rdi
-       mov       rdx,offset MD_System.Threading.Tasks.Task.ContinueWith[[System.Threading.Tasks.Task, mscorlib]](System.Func`2<System.Threading.Tasks.Task,System.Threading.Tasks.Task>)
+       mov       rdx,offset MD_System.Threading.Tasks.Task.ContinueWith[[System.Threading.Tasks.Task, mscorlib]](System.Func`2<System.Threading.Tasks.Task,System.Threading.Tasks.Task>, System.Threading.Tasks.TaskContinuationOptions)
+       mov       r9d,80000
        cmp       [rcx],ecx
-       call      System.Threading.Tasks.Task.ContinueWith[[System.__Canon, mscorlib]](System.Func`2<System.Threading.Tasks.Task,System.__Canon>)
+       call      System.Threading.Tasks.Task.ContinueWith[[System.__Canon, mscorlib]](System.Func`2<System.Threading.Tasks.Task,System.__Canon>, System.Threading.Tasks.TaskContinuationOptions)
        mov       rcx,rax
        call      System.Threading.Tasks.TaskExtensions.Unwrap(System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>)
        mov       [rbp-38],rax
@@ -2948,7 +3005,7 @@ M03_L02:
        pop       r14
        pop       rbp
        ret
-; Total bytes of code 272
+; Total bytes of code 278
 ```
 ```assembly
 ; Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring.Run(System.Func`2<System.Func`1<System.Threading.Tasks.Task>,System.Threading.Tasks.Task>)
@@ -2989,14 +3046,14 @@ M03_L02:
        mov       rcx,offset MD_System.Linq.Enumerable.Select[[System.Int32, mscorlib],[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, mscorlib]], mscorlib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>>)
        call      System.Linq.Enumerable.Select[[System.Int32, mscorlib],[System.__Canon, mscorlib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.__Canon>)
        mov       rsi,rax
-       mov       rcx,261B12DBD08
+       mov       rcx,1D9D2DE9F50
        mov       r8,[rcx]
        test      r8,r8
        jne       short M04_L00
        mov       rcx,offset MT_System.Func`2[[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, mscorlib]], mscorlib],[System.Threading.Tasks.Task, mscorlib]]
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
-       mov       rdx,261B12DBCF8
+       mov       rdx,1D9D2DE9F40
        mov       rdx,[rdx]
        test      rdx,rdx
        je        short M04_L01
@@ -3004,7 +3061,7 @@ M03_L02:
        call      CORINFO_HELP_ASSIGN_REF
        mov       rdx,offset Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring+<>c.<Run>b__10_1(System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>)
        mov       [rbx+18],rdx
-       mov       rcx,261B12DBD08
+       mov       rcx,1D9D2DE9F50
        mov       rdx,rbx
        call      CORINFO_HELP_CHECKED_ASSIGN_REF
        mov       r8,rbx
@@ -3034,18 +3091,18 @@ M04_L01:
        push      rsi
        sub       rsp,20
        lea       rcx,[MT_System.ArgumentException]
-       call      qword ptr [7FFA48549870]; CORINFO_HELP_NEWSFAST
+       call      qword ptr [7FFDC7889870]; CORINFO_HELP_NEWSFAST
        mov       rsi,rax
        mov       ecx,374C
-       call      00007FFA4854A776
+       call      00007FFDC788A776
        mov       rcx,rax
-       call      qword ptr [7FFA48017E98]; System.Environment.GetResourceFromDefault(System.String)
+       call      qword ptr [7FFDC7357E98]; System.Environment.GetResourceFromDefault(System.String)
        mov       rdx,rax
        mov       rcx,rsi
        nop
        call      System.ArgumentException..ctor(System.String)
        mov       rcx,rsi
-       call      00007FFA4854A76A
+       call      00007FFDC788A76A
        int       3
 ; Total bytes of code 61
 ```
@@ -3056,18 +3113,18 @@ M04_L01:
        mov       rsi,rcx
        mov       ecx,[rsi+3C]
        test      ecx,1600000
-       je        near ptr 00007FFA49362C22
+       je        near ptr 00007FFDC86A2C22
        mov       rcx,rsi
        nop
        call      System.Threading.Tasks.Task.NotifyDebuggerOfWaitCompletionIfNecessary()
        mov       ecx,[rsi+3C]
        and       ecx,1600000
        cmp       ecx,1000000
-       je        near ptr 00007FFA49362C1C
+       je        near ptr 00007FFDC86A2C1C
        mov       rcx,rsi
        nop
        call      System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(System.Threading.Tasks.Task)
-       jmp       near ptr 00007FFA49362C1C
+       jmp       near ptr 00007FFDC86A2C1C
        int       3
        int       3
        int       3
@@ -3106,10 +3163,10 @@ M04_L01:
        mov       rdx,[rbp+10]
        mov       rdx,[rdx+18]
        mov       rcx,[rbp-8]
-       mov       r8,7FF9543AC120
-       call      qword ptr [7FF9540FB648]; System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
+       mov       r8,7FFC9D3EC120
+       call      qword ptr [7FFC9D13B648]; System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
        mov       rcx,[rbp-8]
-       call      qword ptr [7FF9543A16C0]; Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring.Run(System.Func`2<System.Func`1<System.Threading.Tasks.Task>,System.Threading.Tasks.Task>)
+       call      qword ptr [7FFC9D3E16C0]; Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring.Run(System.Func`2<System.Func`1<System.Threading.Tasks.Task>,System.Threading.Tasks.Task>)
        nop
        add       rsp,30
        pop       rbp
@@ -3131,7 +3188,7 @@ M04_L01:
        jne       short M02_L00
        ret
 M02_L00:
-       jmp       qword ptr [7FF95451BAC8]; System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(System.Threading.Tasks.Task)
+       jmp       qword ptr [7FFC9D55DAC8]; System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(System.Threading.Tasks.Task)
 ; Total bytes of code 25
 ```
 ```assembly
@@ -3151,7 +3208,7 @@ M02_L00:
        pop       rdi
        ret
 M03_L00:
-       call      qword ptr [7FF9540FB630]
+       call      qword ptr [7FFC9D13B630]
        int       3
 ; Total bytes of code 44
 ```
@@ -3173,7 +3230,7 @@ M04_L00:
        call      CORINFO_HELP_NEWSFAST
        mov       [rbp-10],rax
        mov       rcx,[rbp-10]
-       call      qword ptr [7FF95451BB40]; Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring+<>c__DisplayClass10_0..ctor()
+       call      qword ptr [7FFC9D55DB40]; Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring+<>c__DisplayClass10_0..ctor()
        mov       rdx,[rbp-10]
        mov       [rbp-8],rdx
        mov       rdx,[rbp-8]
@@ -3185,7 +3242,7 @@ M04_L00:
        mov       [rbp-18],rax
        mov       rcx,[rbp-18]
        xor       edx,edx
-       call      qword ptr [7FF95451D108]; System.Threading.ManualResetEvent..ctor(Boolean)
+       call      qword ptr [7FFC9D55F108]; System.Threading.ManualResetEvent..ctor(Boolean)
        mov       rdx,[rbp-8]
        lea       rcx,[rdx+8]
        mov       rdx,[rbp-18]
@@ -3195,21 +3252,21 @@ M04_L00:
        mov       [rbp-20],rax
        xor       ecx,ecx
        mov       edx,8
-       call      qword ptr [7FF954261240]; System.Linq.Enumerable.Range(Int32, Int32)
+       call      qword ptr [7FFC9D2A1240]; System.Linq.Enumerable.Range(Int32, Int32)
        mov       [rbp-28],rax
        mov       rcx,[rbp-20]
        mov       rdx,[rbp-8]
-       mov       r8,7FF95451AB58
-       call      qword ptr [7FF9540FB648]; System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
+       mov       r8,7FFC9D55CB58
+       call      qword ptr [7FFC9D13B648]; System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
        mov       r8,[rbp-20]
        mov       rdx,[rbp-28]
        mov       rcx,offset MD_System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>>)
-       call      qword ptr [7FF95451D6C0]; System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.__Canon>)
+       call      qword ptr [7FFC9D55F6C0]; System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.__Canon>)
        mov       [rbp-38],rax
-       mov       rcx,7FF954384968
-       mov       edx,0F
+       mov       rcx,7FFC9D3C4978
+       mov       edx,11
        call      CORINFO_HELP_GETSHARED_NONGCSTATIC_BASE
-       mov       rcx,208C8406438
+       mov       rcx,23252C06438
        mov       rcx,[rcx]
        mov       [rbp-30],rcx
        mov       rcx,[rbp-38]
@@ -3221,21 +3278,21 @@ M04_L00:
        mov       rcx,offset MT_System.Func`2[[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib],[System.Threading.Tasks.Task, System.Private.CoreLib]]
        call      CORINFO_HELP_NEWSFAST
        mov       [rbp-58],rax
-       mov       rcx,7FF954384968
-       mov       edx,0F
+       mov       rcx,7FFC9D3C4978
+       mov       edx,11
        call      CORINFO_HELP_GETSHARED_NONGCSTATIC_BASE
-       mov       rdx,208C8406428
+       mov       rdx,23252C06428
        mov       rdx,[rdx]
        mov       [rbp-60],rdx
        mov       rdx,[rbp-60]
        mov       rcx,[rbp-58]
-       mov       r8,7FF95451C738
-       call      qword ptr [7FF9540FB648]; System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
-       mov       rcx,7FF954384968
-       mov       edx,0F
+       mov       r8,7FFC9D55E738
+       call      qword ptr [7FFC9D13B648]; System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
+       mov       rcx,7FFC9D3C4978
+       mov       edx,11
        call      CORINFO_HELP_GETSHARED_NONGCSTATIC_BASE
        mov       rdx,[rbp-58]
-       mov       rcx,208C8406438
+       mov       rcx,23252C06438
        call      CORINFO_HELP_ASSIGN_REF
        mov       r8,[rbp-58]
        mov       [rbp-48],r8
@@ -3243,14 +3300,14 @@ M04_L01:
        mov       r8,[rbp-48]
        mov       rdx,[rbp-40]
        mov       rcx,offset MD_System.Linq.Enumerable.Select[[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib],[System.Threading.Tasks.Task, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>>, System.Func`2<System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>,System.Threading.Tasks.Task>)
-       call      qword ptr [7FF9544B3438]; System.Linq.Enumerable.Select[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>, System.Func`2<System.__Canon,System.__Canon>)
+       call      qword ptr [7FFC9D4E3438]; System.Linq.Enumerable.Select[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>, System.Func`2<System.__Canon,System.__Canon>)
        mov       [rbp-50],rax
        mov       rcx,[rbp-8]
        mov       rcx,[rcx+8]
        cmp       [rcx],ecx
-       call      qword ptr [7FF95451D0D8]; System.Threading.EventWaitHandle.Set()
+       call      qword ptr [7FFC9D55F0D8]; System.Threading.EventWaitHandle.Set()
        mov       rcx,[rbp-50]
-       call      qword ptr [7FF95432B348]; System.Threading.Tasks.Task.WhenAll(System.Collections.Generic.IEnumerable`1<System.Threading.Tasks.Task>)
+       call      qword ptr [7FFC9D36B348]; System.Threading.Tasks.Task.WhenAll(System.Collections.Generic.IEnumerable`1<System.Threading.Tasks.Task>)
        nop
        add       rsp,80
        pop       rbp
@@ -3267,16 +3324,16 @@ M04_L01:
        mov       rcx,rsi
        xor       r8d,r8d
        mov       edx,0FFFFFFFF
-       call      qword ptr [7FF9B3A3BA60]; Precode of System.Threading.Tasks.Task.InternalWaitCore(Int32, System.Threading.CancellationToken)
+       call      qword ptr [7FFCED29BA60]; Precode of System.Threading.Tasks.Task.InternalWaitCore(Int32, System.Threading.CancellationToken)
 M05_L00:
        mov       rcx,rsi
-       call      qword ptr [7FF9B3A3B840]; Precode of System.Threading.Tasks.Task.NotifyDebuggerOfWaitCompletionIfNecessary()
+       call      qword ptr [7FFCED29B840]; Precode of System.Threading.Tasks.Task.NotifyDebuggerOfWaitCompletionIfNecessary()
        mov       ecx,[rsi+34]
        and       ecx,1600000
        cmp       ecx,1000000
        je        short M05_L01
        mov       rcx,rsi
-       call      qword ptr [7FF9B3A3D738]
+       call      qword ptr [7FFCED29D738]
 M05_L01:
        nop
        add       rsp,20
@@ -3407,20 +3464,20 @@ M03_L01:
        mov       rcx,offset MD_System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>>)
        call      System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.__Canon>)
        mov       rsi,rax
-       mov       rcx,1E7CE1B76C0
+       mov       rcx,1A243067430
        mov       r8,[rcx]
        test      r8,r8
        jne       short M04_L00
        mov       rcx,offset MT_System.Func`2[[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib],[System.Threading.Tasks.Task, System.Private.CoreLib]]
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
-       mov       rdx,1E7CE1B76B0
+       mov       rdx,1A243067420
        mov       rdx,[rdx]
        lea       rcx,[rbx+8]
        call      CORINFO_HELP_ASSIGN_REF
        mov       rdx,offset Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring+<>c.<Run>b__10_1(System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>)
        mov       [rbx+18],rdx
-       mov       rcx,1E7CE1B76C0
+       mov       rcx,1A243067430
        mov       rdx,rbx
        call      CORINFO_HELP_CHECKED_ASSIGN_REF
        mov       r8,rbx
@@ -3489,15 +3546,15 @@ System.MulticastDelegate.ThrowNullThisInDelegateToInstance()
        je        short M00_L00
        lea       rcx,[rdi+8]
        call      CORINFO_HELP_ASSIGN_REF
-       mov       rcx,7FF9543AAAB0
+       mov       rcx,7FFC9D3CAAB0
        mov       [rdi+18],rcx
        mov       rcx,rdi
        add       rsp,28
        pop       rsi
        pop       rdi
-       jmp       qword ptr [7FF9543A16C0]; Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring.Run(System.Func`2<System.Func`1<System.Threading.Tasks.Task>,System.Threading.Tasks.Task>)
+       jmp       qword ptr [7FFC9D3C16C0]; Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring.Run(System.Func`2<System.Func`1<System.Threading.Tasks.Task>,System.Threading.Tasks.Task>)
 M00_L00:
-       call      qword ptr [7FF9540FB630]
+       call      qword ptr [7FFC9D11B630]
        int       3
 ; Total bytes of code 81
 ```
@@ -3516,7 +3573,7 @@ M00_L00:
        jne       short M02_L00
        ret
 M02_L00:
-       jmp       qword ptr [7FF9545576C0]; System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(System.Threading.Tasks.Task)
+       jmp       qword ptr [7FFC9D5776C0]; System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(System.Threading.Tasks.Task)
 ; Total bytes of code 25
 ```
 ```assembly
@@ -3543,7 +3600,7 @@ M02_L00:
        xor       edx,edx
        mov       r8d,1
        xor       r9d,r9d
-       call      qword ptr [7FF954557C00]; System.Threading.EventWaitHandle.CreateEventCore(Boolean, System.Threading.EventResetMode, System.String, Boolean ByRef)
+       call      qword ptr [7FFC9D577C00]; System.Threading.EventWaitHandle.CreateEventCore(Boolean, System.Threading.EventResetMode, System.String, Boolean ByRef)
        lea       rcx,[rdi+8]
        mov       rdx,rsi
        call      CORINFO_HELP_ASSIGN_REF
@@ -3561,40 +3618,40 @@ M02_L00:
        lea       rcx,[rbx+8]
        mov       rdx,rdi
        call      CORINFO_HELP_ASSIGN_REF
-       mov       r8,7FF954556750
+       mov       r8,7FFC9D576750
        mov       [rbx+18],r8
        mov       r8,rbx
        mov       rdx,rsi
        mov       rcx,offset MD_System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>>)
-       call      qword ptr [7FF9545595A0]; System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.__Canon>)
+       call      qword ptr [7FFC9D5795A0]; System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.__Canon>)
        mov       rsi,rax
-       mov       rcx,191F84066C8
+       mov       rcx,1C03C406450
        mov       r8,[rcx]
        test      r8,r8
        jne       short M03_L00
        mov       rcx,offset MT_System.Func`2[[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib],[System.Threading.Tasks.Task, System.Private.CoreLib]]
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
-       mov       rdx,191F84066B8
+       mov       rdx,1C03C406440
        mov       rdx,[rdx]
        lea       rcx,[rbx+8]
        call      CORINFO_HELP_ASSIGN_REF
-       mov       rdx,7FF954558618
+       mov       rdx,7FFC9D578618
        mov       [rbx+18],rdx
-       mov       rcx,191F84066C8
+       mov       rcx,1C03C406450
        mov       rdx,rbx
        call      CORINFO_HELP_ASSIGN_REF
        mov       r8,rbx
 M03_L00:
        mov       rdx,rsi
        mov       rcx,offset MD_System.Linq.Enumerable.Select[[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib],[System.Threading.Tasks.Task, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>>, System.Func`2<System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>,System.Threading.Tasks.Task>)
-       call      qword ptr [7FF9544B1510]; System.Linq.Enumerable.Select[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>, System.Func`2<System.__Canon,System.__Canon>)
+       call      qword ptr [7FFC9D4D1510]; System.Linq.Enumerable.Select[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>, System.Func`2<System.__Canon,System.__Canon>)
        mov       rsi,rax
        mov       rcx,[rdi+8]
        cmp       [rcx],ecx
-       call      qword ptr [7FF954557C48]; System.Threading.EventWaitHandle.Set()
+       call      qword ptr [7FFC9D577C48]; System.Threading.EventWaitHandle.Set()
        mov       rcx,rsi
-       call      qword ptr [7FF95432B348]; System.Threading.Tasks.Task.WhenAll(System.Collections.Generic.IEnumerable`1<System.Threading.Tasks.Task>)
+       call      qword ptr [7FFC9D34B348]; System.Threading.Tasks.Task.WhenAll(System.Collections.Generic.IEnumerable`1<System.Threading.Tasks.Task>)
        nop
        add       rsp,30
        pop       rbx
@@ -3613,16 +3670,16 @@ M03_L00:
        mov       rcx,rsi
        xor       r8d,r8d
        mov       edx,0FFFFFFFF
-       call      qword ptr [7FF954329AE0]; System.Threading.Tasks.Task.InternalWaitCore(Int32, System.Threading.CancellationToken)
+       call      qword ptr [7FFC9D349AE0]; System.Threading.Tasks.Task.InternalWaitCore(Int32, System.Threading.CancellationToken)
 M04_L00:
        mov       rcx,rsi
-       call      qword ptr [7FF954329270]; System.Threading.Tasks.Task.NotifyDebuggerOfWaitCompletionIfNecessary()
+       call      qword ptr [7FFC9D349270]; System.Threading.Tasks.Task.NotifyDebuggerOfWaitCompletionIfNecessary()
        mov       ecx,[rsi+34]
        and       ecx,1600000
        cmp       ecx,1000000
        je        short M04_L01
        mov       rcx,rsi
-       call      qword ptr [7FF9545576D8]
+       call      qword ptr [7FFC9D5776D8]
 M04_L01:
        nop
        add       rsp,20
@@ -3755,14 +3812,14 @@ M02_L00:
        mov       rcx,offset MD_System.Linq.Enumerable.Select[[System.Int32, mscorlib],[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, mscorlib]], mscorlib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>>)
        call      System.Linq.Enumerable.Select[[System.Int32, mscorlib],[System.__Canon, mscorlib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.__Canon>)
        mov       rsi,rax
-       mov       rcx,14E3CABBD08
+       mov       rcx,1EF10009F50
        mov       r8,[rcx]
        test      r8,r8
        jne       short M04_L00
        mov       rcx,offset MT_System.Func`2[[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, mscorlib]], mscorlib],[System.Threading.Tasks.Task, mscorlib]]
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
-       mov       rdx,14E3CABBCF8
+       mov       rdx,1EF10009F40
        mov       rdx,[rdx]
        test      rdx,rdx
        je        short M04_L01
@@ -3770,7 +3827,7 @@ M02_L00:
        call      CORINFO_HELP_ASSIGN_REF
        mov       rdx,offset Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring+<>c.<Run>b__10_1(System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>)
        mov       [rbx+18],rdx
-       mov       rcx,14E3CABBD08
+       mov       rcx,1EF10009F50
        mov       rdx,rbx
        call      CORINFO_HELP_CHECKED_ASSIGN_REF
        mov       r8,rbx
@@ -3800,18 +3857,18 @@ M04_L01:
        push      rsi
        sub       rsp,20
        lea       rcx,[MT_System.ArgumentException]
-       call      qword ptr [7FFA48549870]; CORINFO_HELP_NEWSFAST
+       call      qword ptr [7FFDC7889870]; CORINFO_HELP_NEWSFAST
        mov       rsi,rax
        mov       ecx,374C
-       call      00007FFA4854A776
+       call      00007FFDC788A776
        mov       rcx,rax
-       call      qword ptr [7FFA48017E98]; System.Environment.GetResourceFromDefault(System.String)
+       call      qword ptr [7FFDC7357E98]; System.Environment.GetResourceFromDefault(System.String)
        mov       rdx,rax
        mov       rcx,rsi
        nop
        call      System.ArgumentException..ctor(System.String)
        mov       rcx,rsi
-       call      00007FFA4854A76A
+       call      00007FFDC788A76A
        int       3
 ; Total bytes of code 61
 ```
@@ -3822,18 +3879,18 @@ M04_L01:
        mov       rsi,rcx
        mov       ecx,[rsi+3C]
        test      ecx,1600000
-       je        near ptr 00007FFA49362C22
+       je        near ptr 00007FFDC86A2C22
        mov       rcx,rsi
        nop
        call      System.Threading.Tasks.Task.NotifyDebuggerOfWaitCompletionIfNecessary()
        mov       ecx,[rsi+3C]
        and       ecx,1600000
        cmp       ecx,1000000
-       je        near ptr 00007FFA49362C1C
+       je        near ptr 00007FFDC86A2C1C
        mov       rcx,rsi
        nop
        call      System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(System.Threading.Tasks.Task)
-       jmp       near ptr 00007FFA49362C1C
+       jmp       near ptr 00007FFDC86A2C1C
        int       3
        int       3
        int       3
@@ -3981,14 +4038,14 @@ M02_L00:
        mov       rcx,offset MD_System.Linq.Enumerable.Select[[System.Int32, mscorlib],[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, mscorlib]], mscorlib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>>)
        call      System.Linq.Enumerable.Select[[System.Int32, mscorlib],[System.__Canon, mscorlib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.__Canon>)
        mov       rsi,rax
-       mov       rcx,253241FBD08
+       mov       rcx,21DBC0A9F50
        mov       r8,[rcx]
        test      r8,r8
        jne       short M04_L00
        mov       rcx,offset MT_System.Func`2[[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, mscorlib]], mscorlib],[System.Threading.Tasks.Task, mscorlib]]
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
-       mov       rdx,253241FBCF8
+       mov       rdx,21DBC0A9F40
        mov       rdx,[rdx]
        test      rdx,rdx
        je        short M04_L01
@@ -3996,7 +4053,7 @@ M02_L00:
        call      CORINFO_HELP_ASSIGN_REF
        mov       rdx,offset Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring+<>c.<Run>b__10_1(System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>)
        mov       [rbx+18],rdx
-       mov       rcx,253241FBD08
+       mov       rcx,21DBC0A9F50
        mov       rdx,rbx
        call      CORINFO_HELP_CHECKED_ASSIGN_REF
        mov       r8,rbx
@@ -4026,18 +4083,18 @@ M04_L01:
        push      rsi
        sub       rsp,20
        lea       rcx,[MT_System.ArgumentException]
-       call      qword ptr [7FFA48549870]; CORINFO_HELP_NEWSFAST
+       call      qword ptr [7FFDC7889870]; CORINFO_HELP_NEWSFAST
        mov       rsi,rax
        mov       ecx,374C
-       call      00007FFA4854A776
+       call      00007FFDC788A776
        mov       rcx,rax
-       call      qword ptr [7FFA48017E98]; System.Environment.GetResourceFromDefault(System.String)
+       call      qword ptr [7FFDC7357E98]; System.Environment.GetResourceFromDefault(System.String)
        mov       rdx,rax
        mov       rcx,rsi
        nop
        call      System.ArgumentException..ctor(System.String)
        mov       rcx,rsi
-       call      00007FFA4854A76A
+       call      00007FFDC788A76A
        int       3
 ; Total bytes of code 61
 ```
@@ -4048,18 +4105,18 @@ M04_L01:
        mov       rsi,rcx
        mov       ecx,[rsi+3C]
        test      ecx,1600000
-       je        near ptr 00007FFA49362C22
+       je        near ptr 00007FFDC86A2C22
        mov       rcx,rsi
        nop
        call      System.Threading.Tasks.Task.NotifyDebuggerOfWaitCompletionIfNecessary()
        mov       ecx,[rsi+3C]
        and       ecx,1600000
        cmp       ecx,1000000
-       je        near ptr 00007FFA49362C1C
+       je        near ptr 00007FFDC86A2C1C
        mov       rcx,rsi
        nop
        call      System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(System.Threading.Tasks.Task)
-       jmp       near ptr 00007FFA49362C1C
+       jmp       near ptr 00007FFDC86A2C1C
        int       3
        int       3
        int       3
@@ -4098,10 +4155,10 @@ M04_L01:
        mov       rdx,[rbp+10]
        mov       rdx,[rdx+20]
        mov       rcx,[rbp-8]
-       mov       r8,7FF95439C168
-       call      qword ptr [7FF9540EB648]; System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
+       mov       r8,7FFC9D3EC168
+       call      qword ptr [7FFC9D13B648]; System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
        mov       rcx,[rbp-8]
-       call      qword ptr [7FF9543916C0]; Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring.Run(System.Func`2<System.Func`1<System.Threading.Tasks.Task>,System.Threading.Tasks.Task>)
+       call      qword ptr [7FFC9D3E16C0]; Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring.Run(System.Func`2<System.Func`1<System.Threading.Tasks.Task>,System.Threading.Tasks.Task>)
        nop
        add       rsp,30
        pop       rbp
@@ -4123,7 +4180,7 @@ M04_L01:
        jne       short M02_L00
        ret
 M02_L00:
-       jmp       qword ptr [7FF95450BAC8]; System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(System.Threading.Tasks.Task)
+       jmp       qword ptr [7FFC9D55DAC8]; System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(System.Threading.Tasks.Task)
 ; Total bytes of code 25
 ```
 ```assembly
@@ -4143,7 +4200,7 @@ M02_L00:
        pop       rdi
        ret
 M03_L00:
-       call      qword ptr [7FF9540EB630]
+       call      qword ptr [7FFC9D13B630]
        int       3
 ; Total bytes of code 44
 ```
@@ -4165,7 +4222,7 @@ M04_L00:
        call      CORINFO_HELP_NEWSFAST
        mov       [rbp-10],rax
        mov       rcx,[rbp-10]
-       call      qword ptr [7FF95450BB40]; Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring+<>c__DisplayClass10_0..ctor()
+       call      qword ptr [7FFC9D55DB40]; Benchmarks.Synchronization.TaskQueue.TaskQueueMonitoring+<>c__DisplayClass10_0..ctor()
        mov       rdx,[rbp-10]
        mov       [rbp-8],rdx
        mov       rdx,[rbp-8]
@@ -4177,7 +4234,7 @@ M04_L00:
        mov       [rbp-18],rax
        mov       rcx,[rbp-18]
        xor       edx,edx
-       call      qword ptr [7FF95450D108]; System.Threading.ManualResetEvent..ctor(Boolean)
+       call      qword ptr [7FFC9D55F108]; System.Threading.ManualResetEvent..ctor(Boolean)
        mov       rdx,[rbp-8]
        lea       rcx,[rdx+8]
        mov       rdx,[rbp-18]
@@ -4187,21 +4244,21 @@ M04_L00:
        mov       [rbp-20],rax
        xor       ecx,ecx
        mov       edx,8
-       call      qword ptr [7FF954251240]; System.Linq.Enumerable.Range(Int32, Int32)
+       call      qword ptr [7FFC9D2A1240]; System.Linq.Enumerable.Range(Int32, Int32)
        mov       [rbp-28],rax
        mov       rcx,[rbp-20]
        mov       rdx,[rbp-8]
-       mov       r8,7FF95450AB58
-       call      qword ptr [7FF9540EB648]; System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
+       mov       r8,7FFC9D55CB58
+       call      qword ptr [7FFC9D13B648]; System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
        mov       r8,[rbp-20]
        mov       rdx,[rbp-28]
        mov       rcx,offset MD_System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>>)
-       call      qword ptr [7FF95450D6C0]; System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.__Canon>)
+       call      qword ptr [7FFC9D55F6C0]; System.Linq.Enumerable.Select[[System.Int32, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<Int32>, System.Func`2<Int32,System.__Canon>)
        mov       [rbp-38],rax
-       mov       rcx,7FF954374968
-       mov       edx,0F
+       mov       rcx,7FFC9D3C4978
+       mov       edx,11
        call      CORINFO_HELP_GETSHARED_NONGCSTATIC_BASE
-       mov       rcx,281D3406438
+       mov       rcx,1D5DF806438
        mov       rcx,[rcx]
        mov       [rbp-30],rcx
        mov       rcx,[rbp-38]
@@ -4213,21 +4270,21 @@ M04_L00:
        mov       rcx,offset MT_System.Func`2[[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib],[System.Threading.Tasks.Task, System.Private.CoreLib]]
        call      CORINFO_HELP_NEWSFAST
        mov       [rbp-58],rax
-       mov       rcx,7FF954374968
-       mov       edx,0F
+       mov       rcx,7FFC9D3C4978
+       mov       edx,11
        call      CORINFO_HELP_GETSHARED_NONGCSTATIC_BASE
-       mov       rdx,281D3406428
+       mov       rdx,1D5DF806428
        mov       rdx,[rdx]
        mov       [rbp-60],rdx
        mov       rdx,[rbp-60]
        mov       rcx,[rbp-58]
-       mov       r8,7FF95450C738
-       call      qword ptr [7FF9540EB648]; System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
-       mov       rcx,7FF954374968
-       mov       edx,0F
+       mov       r8,7FFC9D55E738
+       call      qword ptr [7FFC9D13B648]; System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
+       mov       rcx,7FFC9D3C4978
+       mov       edx,11
        call      CORINFO_HELP_GETSHARED_NONGCSTATIC_BASE
        mov       rdx,[rbp-58]
-       mov       rcx,281D3406438
+       mov       rcx,1D5DF806438
        call      CORINFO_HELP_ASSIGN_REF
        mov       r8,[rbp-58]
        mov       [rbp-48],r8
@@ -4235,14 +4292,14 @@ M04_L01:
        mov       r8,[rbp-48]
        mov       rdx,[rbp-40]
        mov       rcx,offset MD_System.Linq.Enumerable.Select[[System.Threading.Tasks.Task`1[[System.Threading.Tasks.Task, System.Private.CoreLib]], System.Private.CoreLib],[System.Threading.Tasks.Task, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>>, System.Func`2<System.Threading.Tasks.Task`1<System.Threading.Tasks.Task>,System.Threading.Tasks.Task>)
-       call      qword ptr [7FF9544A3438]; System.Linq.Enumerable.Select[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>, System.Func`2<System.__Canon,System.__Canon>)
+       call      qword ptr [7FFC9D4E3438]; System.Linq.Enumerable.Select[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>, System.Func`2<System.__Canon,System.__Canon>)
        mov       [rbp-50],rax
        mov       rcx,[rbp-8]
        mov       rcx,[rcx+8]
        cmp       [rcx],ecx
-       call      qword ptr [7FF95450D0D8]; System.Threading.EventWaitHandle.Set()
+       call      qword ptr [7FFC9D55F0D8]; System.Threading.EventWaitHandle.Set()
        mov       rcx,[rbp-50]
-       call      qword ptr [7FF95431B348]; System.Threading.Tasks.Task.WhenAll(System.Collections.Generic.IEnumerable`1<System.Threading.Tasks.Task>)
+       call      qword ptr [7FFC9D36B348]; System.Threading.Tasks.Task.WhenAll(System.Collections.Generic.IEnumerable`1<System.Threading.Tasks.Task>)
        nop
        add       rsp,80
        pop       rbp
@@ -4259,16 +4316,16 @@ M04_L01:
        mov       rcx,rsi
        xor       r8d,r8d
        mov       edx,0FFFFFFFF
-       call      qword ptr [7FF9B3A3BA60]; Precode of System.Threading.Tasks.Task.InternalWaitCore(Int32, System.Threading.CancellationToken)
+       call      qword ptr [7FFCED29BA60]; Precode of System.Threading.Tasks.Task.InternalWaitCore(Int32, System.Threading.CancellationToken)
 M05_L00:
        mov       rcx,rsi
-       call      qword ptr [7FF9B3A3B840]; Precode of System.Threading.Tasks.Task.NotifyDebuggerOfWaitCompletionIfNecessary()
+       call      qword ptr [7FFCED29B840]; Precode of System.Threading.Tasks.Task.NotifyDebuggerOfWaitCompletionIfNecessary()
        mov       ecx,[rsi+34]
        and       ecx,1600000
        cmp       ecx,1000000
        je        short M05_L01
        mov       rcx,rsi
-       call      qword ptr [7FF9B3A3D738]
+       call      qword ptr [7FFCED29D738]
 M05_L01:
        nop
        add       rsp,20

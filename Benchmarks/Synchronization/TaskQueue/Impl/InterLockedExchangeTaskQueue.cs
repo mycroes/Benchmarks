@@ -9,7 +9,8 @@ internal sealed class InterLockedExchangeTaskQueue
         var tcs = new TaskCompletionSource<Task>();
         var completion = tcs.Task.Unwrap();
 
-        Interlocked.Exchange(ref queue, completion).ContinueWith(_ => tcs.SetResult(func.Invoke()));
+        Interlocked.Exchange(ref queue, completion).ContinueWith(_ => tcs.SetResult(func.Invoke()),
+            TaskContinuationOptions.ExecuteSynchronously);
 
         return completion;
     }
