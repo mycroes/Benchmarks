@@ -21,10 +21,16 @@ public class ReadInt32
     }
 
     [Benchmark]
-    public int Unsafe_ReadUnaligned()
+    public int Unsafe_ReadUnaligned_Ref_Buffer_Index_Zero()
     {
-        ref var src = ref MemoryMarshal.GetReference(buffer.AsSpan());
+        return Unsafe.ReadUnaligned<int>(ref buffer[0]);
+    }
 
-        return Unsafe.ReadUnaligned<int>(ref src);
+    [Benchmark]
+    public int Unsafe_ReadUnaligned_MemoryMarshal_GetReference()
+    {
+        ref var start = ref MemoryMarshal.GetReference(buffer.AsSpan());
+
+        return Unsafe.ReadUnaligned<int>(ref start);
     }
 }

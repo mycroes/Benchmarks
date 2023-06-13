@@ -160,7 +160,7 @@ M00_L01:
        mov       ecx,1
        mov       edx,0B0
        call      CORINFO_HELP_GETSHARED_NONGCSTATIC_BASE
-       cmp       byte ptr [7FF850DB3DCD],0
+       cmp       byte ptr [7FF850DE3DCD],0
        jne       short M00_L02
        mov       eax,esi
        and       eax,0FF00FF
@@ -200,7 +200,74 @@ System.ThrowHelper.ThrowArgumentOutOfRangeException(System.ExceptionArgument)
 
 ## .NET 6.0.16 (6.0.1623.17311), X64 RyuJIT AVX2
 ```assembly
-; Benchmarks.Serialization.ReadInt32.Unsafe_ReadUnaligned()
+; Benchmarks.Serialization.ReadInt32.Unsafe_ReadUnaligned_Ref_Buffer_Index_Zero()
+       sub       rsp,28
+       mov       rax,[rcx+8]
+       cmp       dword ptr [rax+8],0
+       jbe       short M00_L00
+       add       rax,10
+       mov       eax,[rax]
+       add       rsp,28
+       ret
+M00_L00:
+       call      CORINFO_HELP_RNGCHKFAIL
+       int       3
+; Total bytes of code 31
+```
+
+## .NET 7.0.5 (7.0.523.17405), X64 RyuJIT AVX2
+```assembly
+; Benchmarks.Serialization.ReadInt32.Unsafe_ReadUnaligned_Ref_Buffer_Index_Zero()
+       sub       rsp,28
+       mov       rax,[rcx+8]
+       cmp       dword ptr [rax+8],0
+       jbe       short M00_L00
+       mov       eax,[rax+10]
+       add       rsp,28
+       ret
+M00_L00:
+       call      CORINFO_HELP_RNGCHKFAIL
+       int       3
+; Total bytes of code 28
+```
+
+## .NET Framework 4.8 (4.8.4614.0), X64 RyuJIT VectorSize=256
+```assembly
+; Benchmarks.Serialization.ReadInt32.Unsafe_ReadUnaligned_Ref_Buffer_Index_Zero()
+       sub       rsp,28
+       mov       rax,[rcx+8]
+       cmp       dword ptr [rax+8],0
+       jbe       short M00_L00
+       add       rax,10
+       mov       eax,[rax]
+       add       rsp,28
+       ret
+M00_L00:
+       call      CORINFO_HELP_RNGCHKFAIL
+       int       3
+; Total bytes of code 31
+```
+
+## .NET Framework 4.8 (4.8.4614.0), X64 RyuJIT VectorSize=256
+```assembly
+; Benchmarks.Serialization.ReadInt32.Unsafe_ReadUnaligned_Ref_Buffer_Index_Zero()
+       sub       rsp,28
+       mov       rax,[rcx+8]
+       cmp       dword ptr [rax+8],0
+       jbe       short M00_L00
+       add       rax,10
+       mov       eax,[rax]
+       add       rsp,28
+       ret
+M00_L00:
+       call      CORINFO_HELP_RNGCHKFAIL
+       int       3
+; Total bytes of code 31
+```
+
+## .NET 6.0.16 (6.0.1623.17311), X64 RyuJIT AVX2
+```assembly
+; Benchmarks.Serialization.ReadInt32.Unsafe_ReadUnaligned_MemoryMarshal_GetReference()
        mov       rax,[rcx+8]
        test      rax,rax
        je        short M00_L01
@@ -217,7 +284,7 @@ M00_L01:
 
 ## .NET 7.0.5 (7.0.523.17405), X64 RyuJIT AVX2
 ```assembly
-; Benchmarks.Serialization.ReadInt32.Unsafe_ReadUnaligned()
+; Benchmarks.Serialization.ReadInt32.Unsafe_ReadUnaligned_MemoryMarshal_GetReference()
        mov       rax,[rcx+8]
        test      rax,rax
        je        short M00_L01
@@ -234,7 +301,7 @@ M00_L01:
 
 ## .NET Framework 4.8 (4.8.4614.0), X64 RyuJIT VectorSize=256
 ```assembly
-; Benchmarks.Serialization.ReadInt32.Unsafe_ReadUnaligned()
+; Benchmarks.Serialization.ReadInt32.Unsafe_ReadUnaligned_MemoryMarshal_GetReference()
        push      rdi
        push      rsi
        sub       rsp,38
@@ -285,7 +352,7 @@ M01_L00:
 
 ## .NET Framework 4.8 (4.8.4614.0), X64 RyuJIT VectorSize=256
 ```assembly
-; Benchmarks.Serialization.ReadInt32.Unsafe_ReadUnaligned()
+; Benchmarks.Serialization.ReadInt32.Unsafe_ReadUnaligned_MemoryMarshal_GetReference()
        push      rdi
        push      rsi
        sub       rsp,38

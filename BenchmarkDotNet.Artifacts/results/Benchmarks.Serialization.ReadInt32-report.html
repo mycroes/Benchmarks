@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>Benchmarks.Serialization.ReadInt32-20230613-234325</title>
+<title>Benchmarks.Serialization.ReadInt32-20230614-002101</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -17,24 +17,28 @@ BenchmarkDotNet=v0.13.5, OS=Windows 10 (10.0.19045.2965/22H2/2022Update)
 Intel Core i9-9900K CPU 3.60GHz (Coffee Lake), 1 CPU, 16 logical and 8 physical cores
 .NET SDK=7.0.302
   [Host]     : .NET 7.0.5 (7.0.523.17405), X64 RyuJIT AVX2
-  Job-TIXCXF : .NET 6.0.16 (6.0.1623.17311), X64 RyuJIT AVX2
-  Job-PGYRRQ : .NET 7.0.5 (7.0.523.17405), X64 RyuJIT AVX2
-  Job-MXZRCV : .NET Framework 4.8 (4.8.4614.0), X64 RyuJIT VectorSize=256
-  Job-FJZKVM : .NET Framework 4.8 (4.8.4614.0), X64 RyuJIT VectorSize=256
+  Job-BNDNOX : .NET 6.0.16 (6.0.1623.17311), X64 RyuJIT AVX2
+  Job-TYERJG : .NET 7.0.5 (7.0.523.17405), X64 RyuJIT AVX2
+  Job-PZOYBW : .NET Framework 4.8 (4.8.4614.0), X64 RyuJIT VectorSize=256
+  Job-UZPWQL : .NET Framework 4.8 (4.8.4614.0), X64 RyuJIT VectorSize=256
 </code></pre>
 <pre><code></code></pre>
 
 <table>
-<thead><tr><th>                          Method</th><th>       Runtime</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Median</th><th>Ratio</th><th>RatioSD</th><th>Code Size</th><th>Allocated</th><th>Alloc Ratio</th>
+<thead><tr><th>                                   Method</th><th>       Runtime</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Median</th><th>Ratio</th><th>RatioSD</th><th>Code Size</th><th>Allocated</th><th>Alloc Ratio</th>
 </tr>
-</thead><tbody><tr><td>BinaryPrimitives_ReadInt32LittleEndian</td><td>.NET 6.0</td><td>0.0043 ns</td><td>0.0085 ns</td><td>0.0155 ns</td><td>0.0000 ns</td><td>0.000</td><td>0.00</td><td>49 B</td><td>-</td><td>NA</td>
-</tr><tr><td>BinaryPrimitives_ReadInt32LittleEndian</td><td>.NET 7.0</td><td>0.0349 ns</td><td>0.0300 ns</td><td>0.0493 ns</td><td>0.0118 ns</td><td>0.003</td><td>0.00</td><td>50 B</td><td>-</td><td>NA</td>
-</tr><tr><td>BinaryPrimitives_ReadInt32LittleEndian</td><td>.NET Framework 4.6.2</td><td>12.5849 ns</td><td>0.4337 ns</td><td>1.2444 ns</td><td>12.6127 ns</td><td>1.000</td><td>0.00</td><td>173 B</td><td>-</td><td>NA</td>
-</tr><tr><td>BinaryPrimitives_ReadInt32LittleEndian</td><td>.NET Framework 4.8</td><td>13.3847 ns</td><td>0.5973 ns</td><td>1.6945 ns</td><td>12.6782 ns</td><td>1.078</td><td>0.19</td><td>173 B</td><td>-</td><td>NA</td>
-</tr><tr><td>Unsafe_ReadUnaligned</td><td>.NET 6.0</td><td>0.0124 ns</td><td>0.0137 ns</td><td>0.0250 ns</td><td>0.0000 ns</td><td>0.001</td><td>0.00</td><td>23 B</td><td>-</td><td>NA</td>
-</tr><tr><td>Unsafe_ReadUnaligned</td><td>.NET 7.0</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.000</td><td>0.00</td><td>23 B</td><td>-</td><td>NA</td>
-</tr><tr><td>Unsafe_ReadUnaligned</td><td>.NET Framework 4.6.2</td><td>12.1512 ns</td><td>0.2818 ns</td><td>0.4785 ns</td><td>12.1353 ns</td><td>1.000</td><td>0.00</td><td>110 B</td><td>-</td><td>NA</td>
-</tr><tr><td>Unsafe_ReadUnaligned</td><td>.NET Framework 4.8</td><td>11.7623 ns</td><td>0.2685 ns</td><td>0.3492 ns</td><td>11.6804 ns</td><td>0.970</td><td>0.05</td><td>110 B</td><td>-</td><td>NA</td>
+</thead><tbody><tr><td>BinaryPrimitives_ReadInt32LittleEndian</td><td>.NET 6.0</td><td>0.0255 ns</td><td>0.0213 ns</td><td>0.0325 ns</td><td>0.0106 ns</td><td>0.003</td><td>0.00</td><td>49 B</td><td>-</td><td>NA</td>
+</tr><tr><td>BinaryPrimitives_ReadInt32LittleEndian</td><td>.NET 7.0</td><td>0.0044 ns</td><td>0.0106 ns</td><td>0.0109 ns</td><td>0.0000 ns</td><td>0.000</td><td>0.00</td><td>50 B</td><td>-</td><td>NA</td>
+</tr><tr><td>BinaryPrimitives_ReadInt32LittleEndian</td><td>.NET Framework 4.6.2</td><td>9.4310 ns</td><td>0.2160 ns</td><td>0.2312 ns</td><td>9.4314 ns</td><td>1.000</td><td>0.00</td><td>173 B</td><td>-</td><td>NA</td>
+</tr><tr><td>BinaryPrimitives_ReadInt32LittleEndian</td><td>.NET Framework 4.8</td><td>9.6285 ns</td><td>0.2170 ns</td><td>0.2583 ns</td><td>9.5827 ns</td><td>1.023</td><td>0.03</td><td>173 B</td><td>-</td><td>NA</td>
+</tr><tr><td>Unsafe_ReadUnaligned_Ref_Buffer_Index_Zero</td><td>.NET 6.0</td><td>0.2534 ns</td><td>0.0262 ns</td><td>0.0232 ns</td><td>0.2558 ns</td><td>3.03</td><td>0.99</td><td>31 B</td><td>-</td><td>NA</td>
+</tr><tr><td>Unsafe_ReadUnaligned_Ref_Buffer_Index_Zero</td><td>.NET 7.0</td><td>0.0324 ns</td><td>0.0237 ns</td><td>0.0434 ns</td><td>0.0167 ns</td><td>0.64</td><td>0.44</td><td>28 B</td><td>-</td><td>NA</td>
+</tr><tr><td>Unsafe_ReadUnaligned_Ref_Buffer_Index_Zero</td><td>.NET Framework 4.6.2</td><td>0.0910 ns</td><td>0.0290 ns</td><td>0.0271 ns</td><td>0.0968 ns</td><td>1.00</td><td>0.00</td><td>31 B</td><td>-</td><td>NA</td>
+</tr><tr><td>Unsafe_ReadUnaligned_Ref_Buffer_Index_Zero</td><td>.NET Framework 4.8</td><td>0.0722 ns</td><td>0.0264 ns</td><td>0.0403 ns</td><td>0.0728 ns</td><td>0.82</td><td>0.72</td><td>31 B</td><td>-</td><td>NA</td>
+</tr><tr><td>Unsafe_ReadUnaligned_MemoryMarshal_GetReference</td><td>.NET 6.0</td><td>0.0363 ns</td><td>0.0224 ns</td><td>0.0321 ns</td><td>0.0338 ns</td><td>0.004</td><td>0.00</td><td>23 B</td><td>-</td><td>NA</td>
+</tr><tr><td>Unsafe_ReadUnaligned_MemoryMarshal_GetReference</td><td>.NET 7.0</td><td>0.0346 ns</td><td>0.0249 ns</td><td>0.0416 ns</td><td>0.0170 ns</td><td>0.006</td><td>0.01</td><td>23 B</td><td>-</td><td>NA</td>
+</tr><tr><td>Unsafe_ReadUnaligned_MemoryMarshal_GetReference</td><td>.NET Framework 4.6.2</td><td>8.1760 ns</td><td>0.1865 ns</td><td>0.2073 ns</td><td>8.1631 ns</td><td>1.000</td><td>0.00</td><td>110 B</td><td>-</td><td>NA</td>
+</tr><tr><td>Unsafe_ReadUnaligned_MemoryMarshal_GetReference</td><td>.NET Framework 4.8</td><td>8.0730 ns</td><td>0.1760 ns</td><td>0.1883 ns</td><td>8.0839 ns</td><td>0.987</td><td>0.04</td><td>110 B</td><td>-</td><td>NA</td>
 </tr></tbody></table>
 </body>
 </html>
