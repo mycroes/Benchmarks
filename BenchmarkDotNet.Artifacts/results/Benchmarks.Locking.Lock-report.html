@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>Benchmarks.Locking.Lock-20230621-160227</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet=v0.13.5, OS=Windows 10 (10.0.19045.3086/22H2/2022Update)
+Intel Core i9-9900K CPU 3.60GHz (Coffee Lake), 1 CPU, 16 logical and 8 physical cores
+.NET SDK=7.0.302
+  [Host]     : .NET 7.0.5 (7.0.523.17405), X64 RyuJIT AVX2
+  Job-ZPMBNN : .NET 6.0.18 (6.0.1823.26907), X64 RyuJIT AVX2
+  Job-EBYCEZ : .NET 7.0.5 (7.0.523.17405), X64 RyuJIT AVX2
+  Job-VXASFE : .NET Framework 4.8 (4.8.4644.0), X64 RyuJIT VectorSize=256
+  Job-HZZWLU : .NET Framework 4.8 (4.8.4644.0), X64 RyuJIT VectorSize=256
+</code></pre>
+<pre><code></code></pre>
+
+<table>
+<thead><tr><th>   Method</th><th>       Runtime</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Median</th><th>Ratio</th><th>RatioSD</th><th>Code Size</th><th>Gen0</th><th>Gen1</th><th>Gen2</th><th>Allocated</th><th>Alloc Ratio</th>
+</tr>
+</thead><tbody><tr><td>LockMutex</td><td>.NET 6.0</td><td>16.538 ns</td><td>0.3564 ns</td><td>0.6866 ns</td><td>16.461 ns</td><td>1.05</td><td>0.06</td><td>114 B</td><td>-</td><td>-</td><td>-</td><td>-</td><td>NA</td>
+</tr><tr><td>LockMutex</td><td>.NET 7.0</td><td>16.545 ns</td><td>0.3534 ns</td><td>0.4595 ns</td><td>16.561 ns</td><td>1.05</td><td>0.05</td><td>115 B</td><td>-</td><td>-</td><td>-</td><td>-</td><td>NA</td>
+</tr><tr><td>LockMutex</td><td>.NET Framework 4.6.2</td><td>15.778 ns</td><td>0.3400 ns</td><td>0.4422 ns</td><td>15.659 ns</td><td>1.00</td><td>0.00</td><td>193 B</td><td>-</td><td>-</td><td>-</td><td>-</td><td>NA</td>
+</tr><tr><td>LockMutex</td><td>.NET Framework 4.8</td><td>16.435 ns</td><td>0.3579 ns</td><td>0.3348 ns</td><td>16.534 ns</td><td>1.04</td><td>0.04</td><td>193 B</td><td>-</td><td>-</td><td>-</td><td>-</td><td>NA</td>
+</tr><tr><td>MonitorEnter</td><td>.NET 6.0</td><td>15.681 ns</td><td>0.3439 ns</td><td>0.6708 ns</td><td>15.481 ns</td><td>1.02</td><td>0.05</td><td>125 B</td><td>-</td><td>-</td><td>-</td><td>-</td><td>NA</td>
+</tr><tr><td>MonitorEnter</td><td>.NET 7.0</td><td>16.948 ns</td><td>0.3607 ns</td><td>0.3859 ns</td><td>16.883 ns</td><td>1.07</td><td>0.04</td><td>127 B</td><td>-</td><td>-</td><td>-</td><td>-</td><td>NA</td>
+</tr><tr><td>MonitorEnter</td><td>.NET Framework 4.6.2</td><td>15.866 ns</td><td>0.2982 ns</td><td>0.2644 ns</td><td>15.833 ns</td><td>1.00</td><td>0.00</td><td>214 B</td><td>-</td><td>-</td><td>-</td><td>-</td><td>NA</td>
+</tr><tr><td>MonitorEnter</td><td>.NET Framework 4.8</td><td>15.668 ns</td><td>0.3280 ns</td><td>0.3904 ns</td><td>15.711 ns</td><td>0.99</td><td>0.03</td><td>214 B</td><td>-</td><td>-</td><td>-</td><td>-</td><td>NA</td>
+</tr><tr><td>CompareExchange</td><td>.NET 6.0</td><td>5.923 ns</td><td>0.1474 ns</td><td>0.1917 ns</td><td>5.936 ns</td><td>0.67</td><td>0.02</td><td>99 B</td><td>-</td><td>-</td><td>-</td><td>-</td><td>NA</td>
+</tr><tr><td>CompareExchange</td><td>.NET 7.0</td><td>6.494 ns</td><td>0.1626 ns</td><td>0.2171 ns</td><td>6.490 ns</td><td>0.73</td><td>0.02</td><td>100 B</td><td>-</td><td>-</td><td>-</td><td>-</td><td>NA</td>
+</tr><tr><td>CompareExchange</td><td>.NET Framework 4.6.2</td><td>8.832 ns</td><td>0.1985 ns</td><td>0.2124 ns</td><td>8.813 ns</td><td>1.00</td><td>0.00</td><td>110 B</td><td>-</td><td>-</td><td>-</td><td>-</td><td>NA</td>
+</tr><tr><td>CompareExchange</td><td>.NET Framework 4.8</td><td>9.028 ns</td><td>0.2069 ns</td><td>0.3399 ns</td><td>8.970 ns</td><td>1.04</td><td>0.05</td><td>110 B</td><td>-</td><td>-</td><td>-</td><td>-</td><td>NA</td>
+</tr><tr><td>ChannelRead</td><td>.NET 6.0</td><td>35.888 ns</td><td>0.6666 ns</td><td>0.8899 ns</td><td>35.935 ns</td><td>0.62</td><td>0.02</td><td>139 B</td><td>-</td><td>-</td><td>-</td><td>-</td><td>0.00</td>
+</tr><tr><td>ChannelRead</td><td>.NET 7.0</td><td>38.052 ns</td><td>0.7129 ns</td><td>0.6669 ns</td><td>38.203 ns</td><td>0.66</td><td>0.02</td><td>140 B</td><td>-</td><td>-</td><td>-</td><td>-</td><td>0.00</td>
+</tr><tr><td>ChannelRead</td><td>.NET Framework 4.6.2</td><td>57.713 ns</td><td>1.1847 ns</td><td>1.2676 ns</td><td>57.668 ns</td><td>1.00</td><td>0.00</td><td>126 B</td><td>0.0014</td><td>0.0007</td><td>0.0001</td><td>9 B</td><td>1.00</td>
+</tr><tr><td>ChannelRead</td><td>.NET Framework 4.8</td><td>57.121 ns</td><td>1.1690 ns</td><td>2.4142 ns</td><td>55.876 ns</td><td>0.99</td><td>0.05</td><td>126 B</td><td>0.0014</td><td>0.0007</td><td>0.0001</td><td>9 B</td><td>1.00</td>
+</tr></tbody></table>
+</body>
+</html>
