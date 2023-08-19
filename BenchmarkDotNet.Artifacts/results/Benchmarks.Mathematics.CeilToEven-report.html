@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>Benchmarks.Mathematics.CeilToEven-20230819-210639</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet=v0.13.5, OS=Windows 10 (10.0.19045.3324/22H2/2022Update)
+Intel Core i9-9900K CPU 3.60GHz (Coffee Lake), 1 CPU, 16 logical and 8 physical cores
+.NET SDK=7.0.302
+  [Host]     : .NET 7.0.5 (7.0.523.17405), X64 RyuJIT AVX2
+  Job-DIRPAA : .NET 7.0.5 (7.0.523.17405), X64 RyuJIT AVX2
+</code></pre>
+<pre><code>Runtime=.NET 7.0  Toolchain=net70  IterationTime=100.0000 ms  
+WarmupCount=3  
+</code></pre>
+
+<table>
+<thead><tr><th>          Method</th><th>Value</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Median</th><th>Ratio</th><th>RatioSD</th><th>Code Size</th><th>Allocated</th><th>Alloc Ratio</th>
+</tr>
+</thead><tbody><tr><td>IfModuloTwoIsOneAddOne</td><td>1</td><td>0.3158 ns</td><td>0.0435 ns</td><td>0.0623 ns</td><td>0.3252 ns</td><td>1.00</td><td>0.00</td><td>26 B</td><td>-</td><td>NA</td>
+</tr><tr><td>IfBitIsSetAddOne</td><td>1</td><td>0.0507 ns</td><td>0.0306 ns</td><td>0.0751 ns</td><td>0.0085 ns</td><td>0.23</td><td>0.26</td><td>11 B</td><td>-</td><td>NA</td>
+</tr><tr><td>NoBranch</td><td>1</td><td>0.0253 ns</td><td>0.0232 ns</td><td>0.0310 ns</td><td>0.0112 ns</td><td>0.09</td><td>0.10</td><td>11 B</td><td>-</td><td>NA</td>
+</tr><tr><td>IfModuloTwoIsOneAddOne</td><td>2</td><td>0.0996 ns</td><td>0.0663 ns</td><td>0.1836 ns</td><td>0.0000 ns</td><td>?</td><td>?</td><td>26 B</td><td>-</td><td>?</td>
+</tr><tr><td>IfBitIsSetAddOne</td><td>2</td><td>0.3976 ns</td><td>0.0553 ns</td><td>0.1550 ns</td><td>0.3764 ns</td><td>?</td><td>?</td><td>11 B</td><td>-</td><td>?</td>
+</tr><tr><td>NoBranch</td><td>2</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>?</td><td>?</td><td>11 B</td><td>-</td><td>?</td>
+</tr><tr><td>IfModuloTwoIsOneAddOne</td><td>3</td><td>0.2670 ns</td><td>0.0452 ns</td><td>0.0924 ns</td><td>0.2525 ns</td><td>1.00</td><td>0.00</td><td>26 B</td><td>-</td><td>NA</td>
+</tr><tr><td>IfBitIsSetAddOne</td><td>3</td><td>0.0189 ns</td><td>0.0206 ns</td><td>0.0426 ns</td><td>0.0000 ns</td><td>0.07</td><td>0.16</td><td>11 B</td><td>-</td><td>NA</td>
+</tr><tr><td>NoBranch</td><td>3</td><td>0.0029 ns</td><td>0.0094 ns</td><td>0.0084 ns</td><td>0.0000 ns</td><td>0.01</td><td>0.04</td><td>11 B</td><td>-</td><td>NA</td>
+</tr><tr><td>IfModuloTwoIsOneAddOne</td><td>4</td><td>1.3477 ns</td><td>0.1765 ns</td><td>0.5205 ns</td><td>1.2100 ns</td><td>1.000</td><td>0.00</td><td>26 B</td><td>-</td><td>NA</td>
+</tr><tr><td>IfBitIsSetAddOne</td><td>4</td><td>0.2436 ns</td><td>0.0384 ns</td><td>0.0299 ns</td><td>0.2404 ns</td><td>0.152</td><td>0.05</td><td>11 B</td><td>-</td><td>NA</td>
+</tr><tr><td>NoBranch</td><td>4</td><td>0.0103 ns</td><td>0.0198 ns</td><td>0.0308 ns</td><td>0.0000 ns</td><td>0.006</td><td>0.02</td><td>11 B</td><td>-</td><td>NA</td>
+</tr><tr><td>IfModuloTwoIsOneAddOne</td><td>5</td><td>0.2019 ns</td><td>0.0318 ns</td><td>0.0249 ns</td><td>0.2060 ns</td><td>1.00</td><td>0.00</td><td>26 B</td><td>-</td><td>NA</td>
+</tr><tr><td>IfBitIsSetAddOne</td><td>5</td><td>0.0189 ns</td><td>0.0240 ns</td><td>0.0277 ns</td><td>0.0000 ns</td><td>0.14</td><td>0.17</td><td>11 B</td><td>-</td><td>NA</td>
+</tr><tr><td>NoBranch</td><td>5</td><td>0.0126 ns</td><td>0.0124 ns</td><td>0.0242 ns</td><td>0.0000 ns</td><td>0.07</td><td>0.16</td><td>11 B</td><td>-</td><td>NA</td>
+</tr></tbody></table>
+</body>
+</html>
